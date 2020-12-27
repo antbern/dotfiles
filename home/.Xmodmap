@@ -1,0 +1,2 @@
+! remap  the right enter key on my Sidewinder keyboard to normal enter (was KP_Enter)
+keycode 104 = Return

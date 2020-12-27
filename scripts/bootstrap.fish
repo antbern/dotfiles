@@ -6,11 +6,15 @@
 set DOTFILES_ROOT (pwd -P)
 
 function success
-    echo [(set_color --bold) ' OK ' (set_color normal)] $argv
+    echo [(set_color --bold green) ' OK ' (set_color normal)] $argv
+end
+
+function success_warn
+    echo [(set_color --bold yellow) ' OK ' (set_color normal)] $argv
 end
 
 function abort
-    echo [(set_color --bold yellow) 'ABRT' (set_color normal)] $argv
+    echo [(set_color --bold red) 'ABRT' (set_color normal)] $argv
     exit 1
 end
 
@@ -31,7 +35,7 @@ function link_file --description "links a file"
         else
             # make backup of old file
             mv $dst $dst.backup
-                and success "moved $dst to $dst.backup"
+                and success_warn "moved $dst to $dst.backup"
                 or abort "failed to backup $dst to $dst.backup"
         end
     end
