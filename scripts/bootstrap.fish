@@ -3,7 +3,9 @@
 # Inspired by caarlos0's dotfiles.fish repository bootstrapping script
 # run from the root of the dotfiles repository
 
-set DOTFILES_ROOT (pwd -P)
+# get the path to the root directory, assumes that this script is in scripts/
+# set DOTFILES_ROOT (pwd -P)
+set -Ux DOTFILES_ROOT (dirname (dirname (realpath (status filename))))
 
 function success
     echo [(set_color --bold green) ' OK ' (set_color normal)] $argv
