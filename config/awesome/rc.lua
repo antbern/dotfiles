@@ -22,6 +22,13 @@ require("awful.hotkeys_popup.keys")
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
+local dpi = require("beautiful").xresources.apply_dpi
+
+awful.screen.set_auto_dpi_enabled(true)
+
+local power_widget = require("power_widget")
+
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -55,6 +62,7 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 terminal = "x-terminal-emulator"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
+local rofi_cmd = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -125,7 +133,9 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+-- local mytextclock = wibox.widget.textclock()
+-- local month_calendar = awful.widget.calendar_popup.month()
+-- month_calendar:attach(mytextclock, "tr")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -187,7 +197,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "[1]", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -213,6 +223,13 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
+    -- -- Create a textclock widget
+    s.textclock = wibox.widget.textclock()
+
+    -- -- Attach popup calendar to the text clock
+    s.month_calendar = awful.widget.calendar_popup.month({ week_numbers = true, screen = s, opacity = 0.7, margin = dpi(4)})
+    s.month_calendar:attach( s.textclock, "tr" )
+
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
@@ -228,9 +245,10 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            power_widget,
             mykeyboardlayout,
             wibox.widget.systray(),
-            mytextclock,
+            s.textclock,
             s.mylayoutbox,
         },
     }
@@ -329,7 +347,10 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+    awful.key({ modkey },            "r",     function () 
+        -- awful.screen.focused().mypromptbox:run() 
+        awful.spawn.with_shell(rofi_cmd)
+        end,
               {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
@@ -464,6 +485,14 @@ globalkeys = gears.table.join(globalkeys,
     awful.key({modkey, "Control", "Shift"}, "Escape",  function ()
         awful.util.spawn("i3lock -c 2f4f4f", false)
     end, {description = "lock screen", group = "Controls"} )
+
+    -- Open arandr to graphically confiugre the displays
+    -- awful.key({modkey}, "d",  function ()
+    --     awful.spawn.with_shell("")
+    -- end, {description = "configure displays", group = "Controls"} ),
+    -- awful.key({modkey}, "d",  function ()
+    --     awful.spawn.with_shell("rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons")
+    -- end, {description = "configure displays", group = "Controls"} )
 )
                   
 
@@ -528,6 +557,7 @@ awful.rules.rules = {
           "Wpa_gui",
           "veromix",
           "xtightvncviewer",
+          "zoom"
           -- "pavucontrol"
         },
 
