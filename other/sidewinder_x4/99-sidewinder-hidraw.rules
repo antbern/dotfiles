@@ -1,0 +1,20 @@
+# This rule also matches the actual keyboard HID, so keyboard 
+# sniffing would be possible without root access
+
+# KERNEL=="hidraw*", SUBSYSTEM=="hidraw", \
+#     ATTRS{idVendor}=="045e", ATTRS{idProduct}=="0768", \
+#     MODE="0664", GROUP="plugdev"
+
+
+# Instead, this rule also matches on the bInterfaceNumber of another parent 
+# to only target the media keys device. Thus, the actual keyboard is not
+# open for anyone to read.
+
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", \
+    ATTRS{idVendor}=="045e", ATTRS{idProduct}=="0768", \
+    ENV{USB_IDS}="045e:0768"
+
+ENV{USB_IDS}=="045e:0768", KERNEL=="hidraw*", SUBSYSTEM=="hidraw", \
+    ATTRS{bInterfaceNumber}=="01", \
+    MODE="0664", GROUP="plugdev", SYMLINK+="hidraw_swx4_media"
+

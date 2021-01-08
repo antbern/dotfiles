@@ -21,7 +21,7 @@ swipe:
 pinch:
   2:
     in:
-      command: 'xdotool key ctrl+equal'
+      command: 'xdotool key ctrl+plus'
     out:
       command: 'xdotool key ctrl+minus'
   4:

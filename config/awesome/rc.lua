@@ -484,7 +484,11 @@ globalkeys = gears.table.join(globalkeys,
     -- Lock Screen Key
     awful.key({modkey, "Control", "Shift"}, "Escape",  function ()
         awful.util.spawn("i3lock -c 2f4f4f", false)
-    end, {description = "lock screen", group = "Controls"} )
+    end, {description = "lock screen", group = "Controls"} ),
+
+    awful.key({ }, "XF86Launch1" , function ()
+        awful.util.spawn("playerctl play-pause", false) 
+    end)
 
     -- Open arandr to graphically confiugre the displays
     -- awful.key({modkey}, "d",  function ()
@@ -557,8 +561,8 @@ awful.rules.rules = {
           "Wpa_gui",
           "veromix",
           "xtightvncviewer",
-          "zoom"
-          -- "pavucontrol"
+          "zoom",
+          "Pavucontrol"
         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -578,9 +582,8 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true }
     },
     
-    -- Set puvacontrol to always be floating (can be moved to the above general floating rule)
-    { rule = { class = "pavucontrol"},
-    	properties = { floating = true } },
+    -- Remove titlebars 
+    { rule = { class = "Alacritty"}, properties = { titlebars_enabled = false }}
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -693,12 +696,16 @@ local run_on_start_up = {
     "redshift-gtk", -- redshift tray icon (for red screen during night)
     "lxpolkit", -- lightweight polkit manager
     "dropbox start", -- dropbox
+    "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py " --  Sidewinder X4 keyboard hidraw interface
 }
 
 for _, app in ipairs(run_on_start_up) do
     run_once(app)
 end
 
-beautiful.useless_gap = 2
+beautiful.useless_gap = dpi(2)
 
 
+naughty.notify({ preset = naughty.config.presets.critical,
+                     title = "DPI Value",
+                     text = string.format("%.3f = %.3f", 10, dpi(10)) })
