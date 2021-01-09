@@ -8,7 +8,7 @@ local wibox = require('wibox');
 
 -- local dpi = require("beautiful").xresources.apply_dpi
 
-local power_cmd = '/home/antbern/.config/awesome/power_usage.sh'
+local power_cmd = '/home/antbern/.config/awesome/scripts/power_usage.sh'
 local interval = 5
 
 local widget = wibox.widget{

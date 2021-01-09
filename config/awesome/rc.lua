@@ -26,7 +26,7 @@ local dpi = require("beautiful").xresources.apply_dpi
 
 awful.screen.set_auto_dpi_enabled(true)
 
-local power_widget = require("power_widget")
+local power_widget = require("widget.power-meter")
 
 
 -- {{{ Error handling
@@ -257,9 +257,9 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 3, function () mymainmenu:toggle() end)
+    -- awful.button({ }, 4, awful.tag.viewnext),
+    -- awful.button({ }, 5, awful.tag.viewprev)
 ))
 -- }}}
 
@@ -464,10 +464,7 @@ end
 
 globalkeys = gears.table.join(globalkeys,
 	awful.key({ }, "XF86PowerOff" , function ()
-	-- TODO: add some useful action here (like a power menu overlay?)
-        naughty.notify({ preset = naughty.config.presets.critical,
-        title = "Power Button",
-        text = "Power Button was pressed!" })
+        awesome.emit_signal('module::exit_screen:show')
     end, {description = "suspend", group = "tag"}),
 
     -- Media Keys
@@ -705,7 +702,5 @@ end
 
 beautiful.useless_gap = dpi(2)
 
-
-naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "DPI Value",
-                     text = string.format("%.3f = %.3f", 10, dpi(10)) })
+-- Load modules
+require('module.exit-screen')
