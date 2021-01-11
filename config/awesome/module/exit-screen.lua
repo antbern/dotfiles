@@ -1,8 +1,18 @@
-local os = require('os');
+--[[
+    Module: Exit Screen
+
+    Listens to the global signal `module::exit_screen:show`
+    to show an overlay containing options to lock, logout (exit),
+    suspend, shutdown or reboot the computer.
+
+    The signal `module::exit_screen:hide` additionally hides the
+    exit screen on-demand.
+]]
+
+
 local awful = require('awful');
 local wibox = require('wibox');
 local gears = require('gears');
-local naughty = require('naughty');
 local beautiful = require('beautiful');
 
 local dpi = require("beautiful").xresources.apply_dpi
@@ -141,9 +151,9 @@ local create_exit_screen = function(s)
     -- configure layout and buttons
     s.exit_screen:setup{
         {
-            create_button_widget("[S]uspend", icons.suspend, suspend_callback),
             create_button_widget("[L]ock", icons.lock, lock_callback),
             create_button_widget("[E]xit", icons.logout, logout_callback),
+            create_button_widget("[S]uspend", icons.suspend, suspend_callback),
             create_button_widget("[P]ower Off", icons.poweroff, poweroff_callback),
             create_button_widget("[R]eboot", icons.reboot, reboot_callback),
             spacing = dpi(50),
@@ -159,7 +169,7 @@ awful.screen.connect_for_each_screen(function(s)
     create_exit_screen(s)
 end)
 
-function hide_exit_screen()
+local function hide_exit_screen()
     awesome.emit_signal('module::exit_screen:hide')
 end
 
@@ -177,9 +187,6 @@ local keybinds = {
 
 -- keygrabber to allow keyboard control
 local exit_screen_grabber = awful.keygrabber{
-    auto_start = true,
-    stop_event = 'release', 
-    stop_key = 'Escape',
     keypressed_callback = function(self, mod, key, command)
 
         key = key:lower()

@@ -314,8 +314,8 @@ globalkeys = gears.table.join(
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
-              {description = "quit awesome", group = "awesome"}),
+    awful.key({ modkey, "Shift"   }, "q", function() awesome.emit_signal("module::exit_screen:show") end,
+              {description = "show exit screen", group = "awesome"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -467,6 +467,10 @@ globalkeys = gears.table.join(globalkeys,
         awesome.emit_signal('module::exit_screen:show')
     end, {description = "suspend", group = "tag"}),
 
+    awful.key({ }, "XF86Calculator" , function ()
+        awful.spawn.with_shell('gnome-calculator')
+    end),
+
     -- Media Keys
     awful.key({ }, "XF86AudioPlay" , function ()
         awful.util.spawn("playerctl play-pause", false) 
@@ -485,6 +489,11 @@ globalkeys = gears.table.join(globalkeys,
 
     awful.key({ }, "XF86Launch1" , function ()
         awful.util.spawn("playerctl play-pause", false) 
+    end),
+
+    -- open file manager with Mod+E (as on windows)
+    awful.key({ modkey }, "e" , function ()
+        awful.util.spawn("pcmanfm", false)
     end)
 
     -- Open arandr to graphically confiugre the displays
@@ -580,7 +589,16 @@ awful.rules.rules = {
     },
     
     -- Remove titlebars 
-    { rule = { class = "Alacritty"}, properties = { titlebars_enabled = false }}
+    { rule_any = { 
+        instance = {
+            "gnome-calculator"
+        },
+        class = {
+            "Alacritty"
+        }
+    }, 
+        properties = { titlebars_enabled = false }
+    }
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -692,6 +710,7 @@ local run_on_start_up = {
     "blueman-applet", -- Bluetooth Manager
     "redshift-gtk", -- redshift tray icon (for red screen during night)
     "lxpolkit", -- lightweight polkit manager
+    "xbindkeys", -- to bind the mouse keys
     "dropbox start", -- dropbox
     "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py " --  Sidewinder X4 keyboard hidraw interface
 }
