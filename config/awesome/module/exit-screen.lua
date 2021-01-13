@@ -39,7 +39,7 @@ local logout_callback = function()
     awesome.quit()
 end
 local lock_callback = function()
-    awful.spawn.with_shell('i3lock-fancy')
+    awful.spawn.with_shell('loginctl lock-session')
     awesome.emit_signal('module::exit_screen:hide')
 end
 
@@ -178,7 +178,7 @@ local keybinds = {
     ['q'] = hide_exit_screen,
     ['x'] = hide_exit_screen,
     ['s'] = suspend_callback,
-    ['t'] = logout_callback,
+    ['e'] = logout_callback,
     ['p'] = poweroff_callback,
     ['r'] = reboot_callback,
     ['l'] = lock_callback

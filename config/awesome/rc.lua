@@ -58,11 +58,17 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 
+beautiful.border_focus = '#a0cfb7'
+-- beautiful.border_focus = '#b2e6cc'
+
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
+terminal = "alacritty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
-local rofi_cmd = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons"
+local cmd_rofi = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons"
+local cmd_lock = "i3lock-fancy"
+local cmd_bisplay_brightness_up = "xbacklight -perceived +5"
+local cmd_bisplay_brightness_down = "xbacklight -perceived -5"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -349,7 +355,7 @@ globalkeys = gears.table.join(
     -- Prompt
     awful.key({ modkey },            "r",     function () 
         -- awful.screen.focused().mypromptbox:run() 
-        awful.spawn.with_shell(rofi_cmd)
+        awful.spawn.with_shell(cmd_rofi)
         end,
               {description = "run prompt", group = "launcher"}),
 
@@ -482,14 +488,28 @@ globalkeys = gears.table.join(globalkeys,
         awful.util.spawn("playerctl previous", false)
     end, {description = "previous", group = "Media Control"}),
 
-    -- Lock Screen Key
-    awful.key({modkey, "Control", "Shift"}, "Escape",  function ()
-        awful.util.spawn("i3lock -c 2f4f4f", false)
-    end, {description = "lock screen", group = "Controls"} ),
 
-    awful.key({ }, "XF86Launch1" , function ()
-        awful.util.spawn("playerctl play-pause", false) 
+    -- Control display brightness with brightness keys
+    awful.key({ }, "XF86MonBrightnessUp" , function ()
+        awful.util.spawn(cmd_bisplay_brightness_up, false)
     end),
+    awful.key({ }, "XF86MonBrightnessDown" , function ()
+        awful.util.spawn(cmd_bisplay_brightness_down, false)
+    end),
+
+    -- Control display brightness with volume keys + modkey
+    awful.key({ modkey }, "XF86AudioRaiseVolume" , function ()
+        awful.util.spawn(cmd_bisplay_brightness_up, false)
+    end),
+    awful.key({ modkey }, "XF86AudioLowerVolume" , function ()
+        awful.util.spawn(cmd_bisplay_brightness_down, false)
+    end),
+
+
+
+    -- awful.key({ }, "XF86Launch1" , function ()
+    --     awful.util.spawn("playerctl play-pause", false) 
+    -- end),
 
     -- open file manager with Mod+E (as on windows)
     awful.key({ modkey }, "e" , function ()
@@ -504,7 +524,7 @@ globalkeys = gears.table.join(globalkeys,
     --     awful.spawn.with_shell("rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons")
     -- end, {description = "configure displays", group = "Controls"} )
 )
-                  
+
 
 clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c)
@@ -591,7 +611,10 @@ awful.rules.rules = {
     -- Remove titlebars 
     { rule_any = { 
         instance = {
-            "gnome-calculator"
+            "gnome-calculator",
+            "evince",
+            "brave-browser",
+            "code"
         },
         class = {
             "Alacritty"
@@ -712,6 +735,7 @@ local run_on_start_up = {
     "lxpolkit", -- lightweight polkit manager
     "xbindkeys", -- to bind the mouse keys
     "dropbox start", -- dropbox
+    "xss-lock -- " .. cmd_lock, -- lock screen on suspend
     "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py " --  Sidewinder X4 keyboard hidraw interface
 }
 
