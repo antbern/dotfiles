@@ -27,6 +27,7 @@ local dpi = require("beautiful").xresources.apply_dpi
 awful.screen.set_auto_dpi_enabled(true)
 
 local power_widget = require("widget.power-meter")
+local music_widget = require("widget.music")
 
 
 -- {{{ Error handling
@@ -69,7 +70,7 @@ local cmd_rofi = "rofi -combi-modi run,window,drun -show combi -modi combi -icon
 local cmd_lock = "i3lock-fancy"
 local cmd_bisplay_brightness_up = "xbacklight -perceived +5"
 local cmd_bisplay_brightness_down = "xbacklight -perceived -5"
-
+local cmd_file_manager = "pcmanfm"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -251,7 +252,8 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            power_widget,
+            music_widget(),
+            power_widget(),
             mykeyboardlayout,
             wibox.widget.systray(),
             s.textclock,
@@ -513,7 +515,7 @@ globalkeys = gears.table.join(globalkeys,
 
     -- open file manager with Mod+E (as on windows)
     awful.key({ modkey }, "e" , function ()
-        awful.util.spawn("pcmanfm", false)
+        awful.util.spawn(cmd_file_manager, false)
     end)
 
     -- Open arandr to graphically confiugre the displays

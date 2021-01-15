@@ -14,5 +14,6 @@ Similar projects:
 
 
 About udev rules:
+* [This](https://unix.stackexchange.com/questions/85379/dev-hidraw-read-permissions) stackexchange question on hidraw read permissions using udev rules.
 * [This](https://unix.stackexchange.com/questions/204829/attributes-from-various-parent-devices-in-a-udev-rule) stackexchange question, especially the thrid answer, linking to [this](https://stackoverflow.com/questions/27017203/udev-rule-with-few-parent-device-attributes/27222804#27222804) stackoverflow answer about how to match attributes from multiple parent devices.
-* [Writing udev rules](http://www.reactivated.net/writing_udev_rules.html) by Daniel Drake
+* [Writing udev rules](http://www.reactivated.net/writing_udev_rules.html) by Daniel Drake.
