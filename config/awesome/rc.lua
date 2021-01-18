@@ -66,11 +66,14 @@ beautiful.border_focus = '#a0cfb7'
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
+
+local script_dir = gears.filesystem.get_configuration_dir() .. "scripts/"
+
 local cmd_rofi = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons"
-local cmd_lock = "i3lock-fancy"
 local cmd_bisplay_brightness_up = "xbacklight -perceived +5"
 local cmd_bisplay_brightness_down = "xbacklight -perceived -5"
 local cmd_file_manager = "pcmanfm"
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -370,10 +373,10 @@ globalkeys = gears.table.join(
                     history_path = awful.util.get_cache_dir() .. "/history_eval"
                   }
               end,
-              {description = "lua execute prompt", group = "awesome"}),
-    -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "lua execute prompt", group = "awesome"})
+    -- -- Menubar
+    -- awful.key({ modkey }, "p", function() menubar.show() end,
+    --           {description = "show the menubar", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
@@ -724,6 +727,7 @@ end
 
 
 local run_on_start_up = {
+    "xrdb -merge $HOME/.xresources", -- load Xresources
     "numlockx on", -- enable numlock on startup 
     "picom --experimental-backends --backend glx --vsync --blur-method gaussian --blur-size 8 --blur-deviation 4", -- compositor for transparency
     "nitrogen --restore", -- wallpaper
@@ -737,8 +741,9 @@ local run_on_start_up = {
     "lxpolkit", -- lightweight polkit manager
     "xbindkeys", -- to bind the mouse keys
     "dropbox start", -- dropbox
-    "xss-lock -- " .. cmd_lock, -- lock screen on suspend
-    "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py " --  Sidewinder X4 keyboard hidraw interface
+    "xss-lock -n " .. script_dir .. "dim-screen.sh -- " .. script_dir .. "i3lock-wrapper.sh", -- lock screen on suspend
+    "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py", --  Sidewinder X4 keyboard hidraw interface
+    "workrave"
 }
 
 for _, app in ipairs(run_on_start_up) do
