@@ -12,5 +12,5 @@ if [[ -f "$brightness_file" ]]; then
 fi
 
 # launch i3lock with a static background picture
-i3lock -n -i $HOME/.local/share/backgrounds/lockscreen.png
+i3lock -n -i $HOME/.local/share/backgrounds/lockscreen.png -c 000000
 

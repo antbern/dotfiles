@@ -8,11 +8,11 @@ local naughty = require('naughty');
 
 local dpi = require("beautiful").xresources.apply_dpi
 
-local playerctl_cmd = 'playerctl metadata --format "<b>{{status}}</b> | <i>{{title}} | {{artist}} | {{album}}</i>" --follow'
+local playerctl_cmd = 'playerctl metadata --format "<b>{{status}}</b> <|> <i>{{title}} | {{artist}} | {{album}}</i>" --follow'
 
 local function format_output(line)
 
-    local s, e = string.find(line, '|', 0, true)
+    local s, e = string.find(line, '<|>', 0, true)
 
     local status = string.sub(line, 0, s-1)
     local therest = string.sub(line, e+1, -1)
@@ -59,16 +59,14 @@ local factory = function()
 
     awful.spawn.with_line_callback(playerctl_cmd, {
         stdout = function(line)
-            
             -- update status here
 
             -- playerctl returns empty line when there is no player available
+            -- log_this('Music', line)
             if line == '' then
-                -- naughty.notify { text = "LINE: Empty" }
                 status_widget.markup = '<b>Nothing Playing</b>'
+                text_widget.markup = ''
             else
-                -- naughty.notify { text = "LINE:"..line }
-
                 status_widget.markup, text_widget.markup = format_output(line)
             end
 
@@ -79,7 +77,7 @@ local factory = function()
         exit = function(reason, code)
             status_widget.markup = string.format('<b>Exited</b> reason=%s, code=%s', reason, code)
             text_widget.markup = ''
-            -- naughty.notify { text = "EXIT:"..reason..", code:"..code}
+            -- log_this('music', "EXIT:"..reason..", code:"..code)
         end
     })
 

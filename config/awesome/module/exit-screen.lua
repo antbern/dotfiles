@@ -7,6 +7,10 @@
 
     The signal `module::exit_screen:hide` additionally hides the
     exit screen on-demand.
+
+    Inspiration sources:
+     * manilarome/the-glorious-dotfiles Awesome config
+     * elenapan/dotfiles Awesome 'elemental' exit_screen
 ]]
 
 
@@ -18,7 +22,7 @@ local beautiful = require('beautiful');
 local dpi = require("beautiful").xresources.apply_dpi
 
 local icon_font = 'RobotoMono NF 48'
-local text_font = 'RobotoMono NF 14'
+local text_font = 'Source Code Pro 14'
 
 local icons = {
     lock = '',
@@ -44,10 +48,10 @@ local lock_callback = function()
 end
 
 local poweroff_callback = function()
-    awful.spawn.with_shell('poweroff')
+    awful.spawn.with_shell('systemctl poweroff')
 end
 local reboot_callback = function()
-    awful.spawn.with_shell('reboot')
+    awful.spawn.with_shell('systemctl reboot')
 end
 
 

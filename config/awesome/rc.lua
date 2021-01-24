@@ -11,7 +11,7 @@ local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
-local naughty = require("naughty")
+-- local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
@@ -30,30 +30,8 @@ local power_widget = require("widget.power-meter")
 local music_widget = require("widget.music")
 
 
--- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
-end
+require("module.notifications")
 
--- Handle runtime errors after startup
-do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
-
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
-        in_error = false
-    end)
-end
--- }}}
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
@@ -61,6 +39,10 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 
 beautiful.border_focus = '#a0cfb7'
 -- beautiful.border_focus = '#b2e6cc'
+
+beautiful.icon_theme = 'Papirus'
+
+-- beautiful.font = "Source Code Pro 9"
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
@@ -613,18 +595,22 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true }
     },
     
-    -- Remove titlebars 
-    { rule_any = { 
-        instance = {
+    -- Remove titlebars
+    { rule_any = {
+        instance = { -- first string of`xprop WM_CLASS`, `xprop WM_CLASS _NET_WM_WINDOW_TYPE` gives type as well
             "gnome-calculator",
-            "evince",
+            -- "evince",
             "brave-browser",
-            "code"
+            "code",
+            "eog",
+            "Steam"
+            -- "gedit",
+            -- "org.gnome.Nautilus" -- TODO: exclude dialog windows
         },
-        class = {
+        class = { -- second string of`xprop WM_CLASS`
             "Alacritty"
         }
-    }, 
+    },
         properties = { titlebars_enabled = false }
     }
 
@@ -712,7 +698,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- awful.spawn.with_shell('pnmixer') -- sound control
 -- awful.spawn.with_shell('nm-applet') -- NetworkManager applet
 
--- awful.spawn.with_shell('dropbox start') -- dropbox sync
 
 
 -- awful.spawn.with_shell(string.format('pgrep -u $USER -f -x %s'))
@@ -728,8 +713,8 @@ end
 
 local run_on_start_up = {
     "xrdb -merge $HOME/.xresources", -- load Xresources
-    "numlockx on", -- enable numlock on startup 
-    "picom --experimental-backends --backend glx --vsync --blur-method gaussian --blur-size 8 --blur-deviation 4", -- compositor for transparency
+    "numlockx on", -- enable numlock on startup
+    "picom", -- compositor for transparency (config in ~/.config/picom.conf)
     "nitrogen --restore", -- wallpaper
     "xfce4-power-manager", -- power manager
     "fusuma", -- trackpad gestures
