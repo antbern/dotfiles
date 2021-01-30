@@ -10,6 +10,7 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
 -- local naughty = require("naughty")
 local menubar = require("menubar")
@@ -458,7 +459,7 @@ end
 globalkeys = gears.table.join(globalkeys,
 	awful.key({ }, "XF86PowerOff" , function ()
         awesome.emit_signal('module::exit_screen:show')
-    end, {description = "suspend", group = "tag"}),
+    end, {description = "show exit screen", group = "awesome"}),
 
     awful.key({ }, "XF86Calculator" , function ()
         awful.spawn.with_shell('gnome-calculator')
@@ -492,6 +493,13 @@ globalkeys = gears.table.join(globalkeys,
         awful.util.spawn(cmd_bisplay_brightness_down, false)
     end),
 
+    awful.key({ }, "Print" , function ()
+        awful.util.spawn("gnome-screenshot --interactive", false)
+    end),
+
+    awful.key({ modkey }, "Insert" , function ()
+        awful.spawn.with_shell("rofimoji")
+    end),
 
 
     -- awful.key({ }, "XF86Launch1" , function ()
@@ -574,8 +582,9 @@ awful.rules.rules = {
           "Wpa_gui",
           "veromix",
           "xtightvncviewer",
-          "zoom",
-          "Pavucontrol"
+        --   "zoom",
+          "Pavucontrol",
+          "RabbitVCS"
         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -712,7 +721,7 @@ end
 
 
 local run_on_start_up = {
-    "xrdb -merge $HOME/.xresources", -- load Xresources
+    "xrdb -merge $HOME/.Xresources", -- load Xresources
     "numlockx on", -- enable numlock on startup
     "picom", -- compositor for transparency (config in ~/.config/picom.conf)
     "nitrogen --restore", -- wallpaper
