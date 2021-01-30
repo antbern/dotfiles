@@ -27,6 +27,8 @@ local dpi = require("beautiful").xresources.apply_dpi
 
 awful.screen.set_auto_dpi_enabled(true)
 
+local apps = require('configuration.apps')
+
 local power_widget = require("widget.power-meter")
 local music_widget = require("widget.music")
 
@@ -44,18 +46,6 @@ beautiful.border_focus = '#a0cfb7'
 beautiful.icon_theme = 'Papirus'
 
 -- beautiful.font = "Source Code Pro 9"
-
--- This is used later as the default terminal and editor to run.
-terminal = "alacritty"
-editor = os.getenv("EDITOR") or "editor"
-editor_cmd = terminal .. " -e " .. editor
-
-local script_dir = gears.filesystem.get_configuration_dir() .. "scripts/"
-
-local cmd_rofi = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons"
-local cmd_bisplay_brightness_up = "xbacklight -perceived +5"
-local cmd_bisplay_brightness_down = "xbacklight -perceived -5"
-local cmd_file_manager = "pcmanfm"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -89,14 +79,14 @@ awful.layout.layouts = {
 -- Create a launcher widget and a main menu
 myawesomemenu = {
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
+   { "manual", apps.default.terminal .. " -e man awesome" },
+   { "edit config", apps.default.editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end },
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_terminal = { "open terminal", terminal }
+local menu_terminal = { "open terminal", apps.default.terminal }
 
 if has_fdo then
     mymainmenu = freedesktop.menu.build({
@@ -118,7 +108,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
 -- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+menubar.utils.terminal = apps.default.terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- Keyboard map indicator and switcher
@@ -198,10 +188,12 @@ awful.screen.connect_for_each_screen(function(s)
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+        awful.button({ }, 1, function () awful.layout.inc( 1) end),
+        awful.button({ }, 3, function () awful.layout.inc(-1) end),
+        awful.button({ }, 4, function () awful.layout.inc( 1) end),
+        awful.button({ }, 5, function () awful.layout.inc(-1) end)
+    ))
+
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
@@ -304,7 +296,7 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
+    awful.key({ modkey,           }, "Return", function () awful.spawn(apps.default.terminal) end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
@@ -341,11 +333,9 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () 
-        -- awful.screen.focused().mypromptbox:run() 
-        awful.spawn.with_shell(cmd_rofi)
-        end,
-              {description = "run prompt", group = "launcher"}),
+    awful.key({ modkey },            "r",     function ()
+        awful.spawn.with_shell(apps.default.rofi)
+    end, {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
@@ -462,43 +452,43 @@ globalkeys = gears.table.join(globalkeys,
     end, {description = "show exit screen", group = "awesome"}),
 
     awful.key({ }, "XF86Calculator" , function ()
-        awful.spawn.with_shell('gnome-calculator')
+        awful.spawn.with_shell(apps.default.calculator)
     end),
 
     -- Media Keys
     awful.key({ }, "XF86AudioPlay" , function ()
-        awful.util.spawn("playerctl play-pause", false) 
+        awful.util.spawn(apps.command.music_play_pause, false) 
     end, {description = "play/pause", group = "Media Control"}),
     awful.key({ }, "XF86AudioNext" , function ()
-        awful.util.spawn("playerctl next", false)
+        awful.util.spawn(apps.command.music_next, false)
     end, {description = "next", group = "Media Control"}),
     awful.key({ }, "XF86AudioPrev" , function ()
-        awful.util.spawn("playerctl previous", false)
+        awful.util.spawn(apps.command.music_previous, false)
     end, {description = "previous", group = "Media Control"}),
 
 
     -- Control display brightness with brightness keys
     awful.key({ }, "XF86MonBrightnessUp" , function ()
-        awful.util.spawn(cmd_bisplay_brightness_up, false)
+        awful.util.spawn(apps.command.bisplay_brightness_up, false)
     end),
     awful.key({ }, "XF86MonBrightnessDown" , function ()
-        awful.util.spawn(cmd_bisplay_brightness_down, false)
+        awful.util.spawn(apps.command.bisplay_brightness_down, false)
     end),
 
     -- Control display brightness with volume keys + modkey
     awful.key({ modkey }, "XF86AudioRaiseVolume" , function ()
-        awful.util.spawn(cmd_bisplay_brightness_up, false)
+        awful.util.spawn(apps.command.bisplay_brightness_up, false)
     end),
     awful.key({ modkey }, "XF86AudioLowerVolume" , function ()
-        awful.util.spawn(cmd_bisplay_brightness_down, false)
+        awful.util.spawn(apps.command.bisplay_brightness_down, false)
     end),
 
     awful.key({ }, "Print" , function ()
-        awful.util.spawn("gnome-screenshot --interactive", false)
+        awful.util.spawn(apps.default.screenshot_interactive, false)
     end),
 
     awful.key({ modkey }, "Insert" , function ()
-        awful.spawn.with_shell("rofimoji")
+        awful.spawn.with_shell(apps.default.insert_character)
     end),
 
 
@@ -508,7 +498,7 @@ globalkeys = gears.table.join(globalkeys,
 
     -- open file manager with Mod+E (as on windows)
     awful.key({ modkey }, "e" , function ()
-        awful.util.spawn(cmd_file_manager, false)
+        awful.util.spawn(apps.default.file_manager, false)
     end)
 
     -- Open arandr to graphically confiugre the displays
@@ -598,7 +588,7 @@ awful.rules.rules = {
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
-
+    
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = true }
@@ -694,57 +684,10 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 
-	
 
--- Added 2020-12-20:
-
-
--- Autostart applications TODO: only start if not already started!
--- awful.spawn.with_shell("picom --backend glx --vsync") -- compositor (for transparency)
--- awful.spawn.with_shell("nitrogen --restore") -- wallpaper
--- awful.spawn.with_shell('xfce4-power-manager') -- power manager
--- awful.spawn.with_shell('fusuma') -- touchpad gestures
--- awful.spawn.with_shell('pnmixer') -- sound control
--- awful.spawn.with_shell('nm-applet') -- NetworkManager applet
-
-
-
--- awful.spawn.with_shell(string.format('pgrep -u $USER -f -x %s'))
-local function run_once(cmd)
-    local findme = cmd
-    local firstspace = cmd:find(' ')
-    if firstspace then
-        findme = cmd:sub(0, firstspace - 1)
-    end
-    awful.spawn.with_shell(string.format('pgrep -u $USER -x %s > /dev/null || %s', findme, cmd))
-end
-
-
-local run_on_start_up = {
-    "xrdb -merge $HOME/.Xresources", -- load Xresources
-    "numlockx on", -- enable numlock on startup
-    "picom", -- compositor for transparency (config in ~/.config/picom.conf)
-    "nitrogen --restore", -- wallpaper
-    "xfce4-power-manager", -- power manager
-    "fusuma", -- trackpad gestures
-    "pnmixer", -- audio mixer / source selection (+ keyboard shortcuts)
-    "indicator-sound-switcher", -- easily select audio input/ouput source
-    "nm-applet", -- NetworkManager tray icon
-    "blueman-applet", -- Bluetooth Manager
-    "redshift-gtk", -- redshift tray icon (for red screen during night)
-    "lxpolkit", -- lightweight polkit manager
-    "xbindkeys", -- to bind the mouse keys
-    "dropbox start", -- dropbox
-    "xss-lock -n " .. script_dir .. "dim-screen.sh -- " .. script_dir .. "i3lock-wrapper.sh", -- lock screen on suspend
-    "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py", --  Sidewinder X4 keyboard hidraw interface
-    "workrave"
-}
-
-for _, app in ipairs(run_on_start_up) do
-    run_once(app)
-end
 
 beautiful.useless_gap = dpi(2)
 
 -- Load modules
 require('module.exit-screen')
+require('module.autostart')

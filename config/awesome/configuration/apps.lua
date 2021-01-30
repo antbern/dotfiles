@@ -1,0 +1,52 @@
+local gears = require("gears")
+
+local script_dir = gears.filesystem.get_configuration_dir() .. "scripts/"
+
+local editor = os.getenv("EDITOR") or "editor"
+
+return {
+    default = {
+        -- List of defaults applications
+
+        file_manager = "pcmanfm",
+        terminal = "alacritty",
+        editor_cmd= "alacritty -e " .. editor,
+
+        rofi = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons",
+        calculator = "gnome-calculator",
+        insert_character = "rofimoji",
+        screenshot_interactive = "gnome-screenshot --interactive",
+
+    },
+
+    command = {
+        -- Commands for performing various tasks
+        bisplay_brightness_up = "xbacklight -perceived +5",
+        bisplay_brightness_down = "xbacklight -perceived -5",
+
+        music_play_pause = "playerctl play-pause",
+        music_next = "playerctl next",
+        music_previous = "playerctl previous",
+    },
+
+    -- List of apps to start once on start-up unless it is not running
+    autostart = {
+        "xrdb -merge $HOME/.Xresources", -- load Xresources
+        "numlockx on", -- enable numlock on startup
+        "picom", -- compositor for transparency (config in ~/.config/picom.conf)
+        "nitrogen --restore", -- wallpaper
+        "xfce4-power-manager", -- power manager
+        "fusuma", -- trackpad gestures
+        "pnmixer", -- audio mixer / source selection (+ keyboard shortcuts)
+        "indicator-sound-switcher", -- easily select audio input/ouput source
+        "nm-applet", -- NetworkManager tray icon
+        "blueman-applet", -- Bluetooth Manager
+        "redshift-gtk", -- redshift tray icon (for red screen during night)
+        "lxpolkit", -- lightweight polkit manager
+        "xbindkeys", -- to bind the mouse keys
+        "dropbox start", -- dropbox
+        "xss-lock -n " .. script_dir .. "dim-screen.sh -- " .. script_dir .. "i3lock-wrapper.sh", -- lock screen on suspend
+        "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py", --  Sidewinder X4 keyboard hidraw interface
+        "workrave"
+    }
+}
