@@ -46,10 +46,21 @@ do
     end)
 end
 
+
+-- Handle deprecation warnings
+awesome.connect_signal("debug::deprecation", function (hint, see, args)
+    naughty.notify({
+        preset = naughty.config.presets.critical,
+        title = "Deprecation warning",
+        text = hint .. '\nSee: ' .. see -- .. '\nArgs: ' .. tostring(table.unpack(args))
+    })
+end)
+
 -- Global function that can be used to log something as a notification
 function log_this(title, text)
     naughty.notify({
         title = 'log: ' .. title,
-        text = text
+        text = text,
+        timeout = 5
     })
 end

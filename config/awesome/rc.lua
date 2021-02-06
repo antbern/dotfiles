@@ -457,48 +457,48 @@ globalkeys = gears.table.join(globalkeys,
 
     -- Media Keys
     awful.key({ }, "XF86AudioPlay" , function ()
-        awful.util.spawn(apps.command.music_play_pause, false) 
+        awful.spawn(apps.command.music_play_pause) 
     end, {description = "play/pause", group = "Media Control"}),
     awful.key({ }, "XF86AudioNext" , function ()
-        awful.util.spawn(apps.command.music_next, false)
+        awful.spawn(apps.command.music_next)
     end, {description = "next", group = "Media Control"}),
     awful.key({ }, "XF86AudioPrev" , function ()
-        awful.util.spawn(apps.command.music_previous, false)
+        awful.spawn(apps.command.music_previous)
     end, {description = "previous", group = "Media Control"}),
 
 
     -- Control display brightness with brightness keys
     awful.key({ }, "XF86MonBrightnessUp" , function ()
-        awful.util.spawn(apps.command.bisplay_brightness_up, false)
+        awful.spawn(apps.command.bisplay_brightness_up)
     end),
     awful.key({ }, "XF86MonBrightnessDown" , function ()
-        awful.util.spawn(apps.command.bisplay_brightness_down, false)
+        awful.spawn(apps.command.bisplay_brightness_down)
     end),
 
     -- Control display brightness with volume keys + modkey
     awful.key({ modkey }, "XF86AudioRaiseVolume" , function ()
-        awful.util.spawn(apps.command.bisplay_brightness_up, false)
+        awful.spawn(apps.command.bisplay_brightness_up)
     end),
     awful.key({ modkey }, "XF86AudioLowerVolume" , function ()
-        awful.util.spawn(apps.command.bisplay_brightness_down, false)
+        awful.spawn(apps.command.bisplay_brightness_down)
     end),
 
     awful.key({ }, "Print" , function ()
-        awful.util.spawn(apps.default.screenshot_interactive, false)
+        awful.spawn(apps.default.screenshot_interactive)
     end),
 
     awful.key({ modkey }, "Insert" , function ()
-        awful.spawn.with_shell(apps.default.insert_character)
+        awful.spawn(apps.default.insert_character)
     end),
 
 
     -- awful.key({ }, "XF86Launch1" , function ()
-    --     awful.util.spawn("playerctl play-pause", false) 
+    --     awful.spawn("playerctl play-pause")
     -- end),
 
     -- open file manager with Mod+E (as on windows)
     awful.key({ modkey }, "e" , function ()
-        awful.util.spawn(apps.default.file_manager, false)
+        awful.spawn(apps.default.file_manager)
     end)
 
     -- Open arandr to graphically confiugre the displays
@@ -602,12 +602,19 @@ awful.rules.rules = {
             "brave-browser",
             "code",
             "eog",
-            "Steam"
+            "Steam",
             -- "gedit",
             -- "org.gnome.Nautilus" -- TODO: exclude dialog windows
+            "libreoffice",
+            "pcmanfm"
         },
         class = { -- second string of`xprop WM_CLASS`
-            "Alacritty"
+            "Alacritty",
+            "winword.exe", -- Word running in Wine
+            "excel.exe" -- Excel running in Wine
+        },
+        type = {
+            "dialog"
         }
     },
         properties = { titlebars_enabled = false }

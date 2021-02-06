@@ -1,6 +1,5 @@
-local gears = require("gears")
 
-local script_dir = gears.filesystem.get_configuration_dir() .. "scripts/"
+local paths = require('configuration.paths')
 
 local editor = os.getenv("EDITOR") or "editor"
 
@@ -27,6 +26,11 @@ return {
         music_play_pause = "playerctl play-pause",
         music_next = "playerctl next",
         music_previous = "playerctl previous",
+
+        exit_screen_lock = "loginctl lock-session",
+        exit_screen_suspend = "systemctl suspend",
+        exit_screen_poweroff = "systemctl poweroff",
+        exit_screen_reboot ="systemctl reboot",
     },
 
     -- List of apps to start once on start-up unless it is not running
@@ -45,7 +49,7 @@ return {
         "lxpolkit", -- lightweight polkit manager
         "xbindkeys", -- to bind the mouse keys
         "dropbox start", -- dropbox
-        "xss-lock -n " .. script_dir .. "dim-screen.sh -- " .. script_dir .. "i3lock-wrapper.sh", -- lock screen on suspend
+        "xss-lock -n " .. paths.script_dir .. "dim-screen.sh -- " .. paths.script_dir .. "i3lock-wrapper.sh", -- lock screen on suspend
         "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py", --  Sidewinder X4 keyboard hidraw interface
         "workrave"
     }

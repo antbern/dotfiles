@@ -21,6 +21,8 @@ local beautiful = require('beautiful');
 
 local dpi = require("beautiful").xresources.apply_dpi
 
+local apps = require("configuration.apps")
+
 local icon_font = 'RobotoMono NF 48'
 local text_font = 'Source Code Pro 14'
 
@@ -36,22 +38,24 @@ local icons = {
 local suspend_callback = function()
     -- TODO: lock screen first
     awesome.emit_signal('module::exit_screen:hide')
-    awful.spawn.with_shell('systemctl suspend')
+    awful.spawn.with_shell(apps.command.exit_screen_suspend)
 end
 
 local logout_callback = function()
     awesome.quit()
 end
+
 local lock_callback = function()
-    awful.spawn.with_shell('loginctl lock-session')
+    awful.spawn.with_shell(apps.command.exit_screen_lock)
     awesome.emit_signal('module::exit_screen:hide')
 end
 
 local poweroff_callback = function()
-    awful.spawn.with_shell('systemctl poweroff')
+    awful.spawn.with_shell(apps.command.exit_screen_poweroff)
 end
+
 local reboot_callback = function()
-    awful.spawn.with_shell('systemctl reboot')
+    awful.spawn.with_shell(apps.command.exit_screen_reboot)
 end
 
 
@@ -128,7 +132,7 @@ local create_exit_screen = function(s)
     -- create the backgroud wibox
     s.exit_screen = wibox{
         screen = s,
-        type = 'spash',
+        type = 'splash',
         visible = false,
         ontop = true,
         -- opacity = 0.5,
