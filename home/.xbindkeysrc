@@ -42,13 +42,13 @@
 #"xbindkeys_show" 
 #  control+shift + q
 
-# Mouse button 6 is Back
+# Mouse button 8 is Back
 "xdotool key Alt_L+Left"
-  b:8
-
-# Mouse button 7 is Forward
-"xdotool key Alt_L+Right"
   b:9
+
+# Mouse button 9 is Forward
+"xdotool key Alt_L+Right"
+  b:8
 
 # set directly keycode (here control + f with my keyboard)
 #"xterm"

@@ -31,6 +31,7 @@ local apps = require('configuration.apps')
 
 local power_widget = require("widget.power-meter")
 local music_widget = require("widget.music")
+local cpu_usage_widget = require("widget.cpu_usage")
 
 
 require("module.notifications")
@@ -232,7 +233,8 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             music_widget(),
             power_widget(),
-            mykeyboardlayout,
+            cpu_usage_widget(),
+            -- mykeyboardlayout,
             wibox.widget.systray(),
             s.textclock,
             s.mylayoutbox,
@@ -499,6 +501,17 @@ globalkeys = gears.table.join(globalkeys,
     -- open file manager with Mod+E (as on windows)
     awful.key({ modkey }, "e" , function ()
         awful.spawn(apps.default.file_manager)
+    end),
+
+
+    awful.key({ modkey }, "F1" , function ()
+        awful.spawn(apps.command.keyboard_layout_1)
+    end),
+    awful.key({ modkey }, "F2" , function ()
+        awful.spawn(apps.command.keyboard_layout_2)
+    end),
+    awful.key({ modkey }, "F3" , function ()
+        awful.spawn(apps.command.keyboard_layout_3)
     end)
 
     -- Open arandr to graphically confiugre the displays
@@ -574,7 +587,8 @@ awful.rules.rules = {
           "xtightvncviewer",
         --   "zoom",
           "Pavucontrol",
-          "RabbitVCS"
+          "RabbitVCS",
+          "MATLABWindow",
         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -589,6 +603,28 @@ awful.rules.rules = {
         }
       }, properties = { floating = true }},
     
+      -- For Libre office open dialog, but doesn't seem to work...
+      {rule = {
+          instance = "libreoffice",
+          class = "LibreOffice 6.4",
+      }, properties = { floating = true}},
+
+      -- For pcmanfm "Execute File" dialog
+      {rule = {
+          instance = "pcmanfm",
+          name = "Execute File",
+      }, properties = { floating = true, position = awful.placement.bottom_left }},
+      
+      -- Eclipse maketplace dialog
+      {rule = {
+        instance = "Eclipse",
+        name = "Eclipse Marketplace ",
+      }, properties = { floating = true }},
+
+
+      
+
+
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = true }
@@ -606,7 +642,8 @@ awful.rules.rules = {
             -- "gedit",
             -- "org.gnome.Nautilus" -- TODO: exclude dialog windows
             "libreoffice",
-            "pcmanfm"
+            "pcmanfm",
+            "microsoft teams - preview"
         },
         class = { -- second string of`xprop WM_CLASS`
             "Alacritty",
@@ -615,11 +652,14 @@ awful.rules.rules = {
         },
         type = {
             "dialog"
+        },
+        name = {
+            "Execute File", -- pcmanfm run file dialog
         }
     },
         properties = { titlebars_enabled = false }
-    }
-
+    },
+    
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
@@ -694,6 +734,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
 beautiful.useless_gap = dpi(2)
+beautiful.gap_single_client = false
 
 -- Load modules
 require('module.exit-screen')

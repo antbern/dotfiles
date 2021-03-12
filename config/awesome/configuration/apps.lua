@@ -31,12 +31,17 @@ return {
         exit_screen_suspend = "systemctl suspend",
         exit_screen_poweroff = "systemctl poweroff",
         exit_screen_reboot ="systemctl reboot",
+
+        keyboard_layout_1 = "ibus engine xkb:se::swe",
+        keyboard_layout_2 = "ibus engine xkb:us::eng",
+        keyboard_layout_3 = "ibus engine xkb:de::ger",
     },
 
     -- List of apps to start once on start-up unless it is not running
     autostart = {
         "xrdb -merge $HOME/.Xresources", -- load Xresources
         "numlockx on", -- enable numlock on startup
+        "setxkbmap -option caps:super",  -- change caps lock to act as Super (Mod4) key
         "picom", -- compositor for transparency (config in ~/.config/picom.conf)
         "nitrogen --restore", -- wallpaper
         "xfce4-power-manager", -- power manager
@@ -50,7 +55,7 @@ return {
         "xbindkeys", -- to bind the mouse keys
         "dropbox start", -- dropbox
         "xss-lock -n " .. paths.script_dir .. "dim-screen.sh -- " .. paths.script_dir .. "i3lock-wrapper.sh", -- lock screen on suspend
-        "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py", --  Sidewinder X4 keyboard hidraw interface
+        -- "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py", --  Sidewinder X4 keyboard hidraw interface
         "workrave"
     }
 }
