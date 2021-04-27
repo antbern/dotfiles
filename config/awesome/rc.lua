@@ -44,6 +44,13 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 beautiful.border_focus = '#a0cfb7'
 -- beautiful.border_focus = '#b2e6cc'
 
+-- beautiful.taglist_bg_focus ='linear:40,0:' ..dpi(40) ..',40:0,' ..beautiful.border_focus ..':0.08,' .. beautiful.primary.hue_400 .. ':0.08,' .. theme.background.hue_800 .. ':1,' .. theme.background.hue_800
+
+-- Set the active tag background and font color
+beautiful.taglist_bg_focus ='#9fdeef'
+beautiful.taglist_fg_focus ='#000000'
+
+
 beautiful.icon_theme = 'Papirus'
 
 -- beautiful.font = "Source Code Pro 9"
@@ -173,6 +180,38 @@ local function set_wallpaper(s)
     end
 end
 
+-- local clientIcon = require("awful.widget.clienticon")
+
+-- local tasklist_widget_template =
+-- {
+--     widget = wibox.container.background,
+--     id = "background_role",
+--     create_callback =
+--         function(self, _client)
+--             self:get_children_by_id("clienticon")[1].client = _client
+--         end,
+--     {
+--         widget = wibox.container.margin,
+--         left = dpi(2),
+--         right = dpi(4),
+--         {
+--             layout = wibox.layout.fixed.horizontal,
+--             {
+--                 widget = wibox.container.margin,
+--                 margins = dpi(4),
+--                 {
+--                     id = "clienticon",
+--                     widget = clientIcon,
+--                 },
+--             },
+--             {
+--                 id = "text_role",
+--                 widget = wibox.widget.textbox,
+--             },
+--         },
+--     },
+-- }
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
@@ -181,7 +220,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "[1]", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -206,8 +245,17 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
+        buttons = tasklist_buttons,
+        -- widget_template = tasklist_widget_template
     }
+
+    -- s.mytasklist = awful.widget.tasklist
+    -- {
+    --     screen  = s,
+    --     filter  = awful.widget.tasklist.filter.currenttags,
+    --     buttons = tasklist_buttons,
+    --     widget_template = beautiful.tasklist_widget_template
+    -- }
 
     -- -- Create a textclock widget
     s.textclock = wibox.widget.textclock()
@@ -503,6 +551,11 @@ globalkeys = gears.table.join(globalkeys,
         awful.spawn(apps.default.file_manager)
     end),
 
+    -- open VSCode Mod+C 
+    awful.key({ modkey }, "c" , function ()
+        awful.spawn(apps.default.code)
+    end),
+
 
     awful.key({ modkey }, "F1" , function ()
         awful.spawn(apps.command.keyboard_layout_1)
@@ -512,6 +565,13 @@ globalkeys = gears.table.join(globalkeys,
     end),
     awful.key({ modkey }, "F3" , function ()
         awful.spawn(apps.command.keyboard_layout_3)
+    end),
+
+    awful.key({ modkey, "Control" }, "Left" , function ()
+        awful.spawn(apps.command.keyboard_home)
+    end),
+    awful.key({ modkey, "Control" }, "Right" , function ()
+        awful.spawn(apps.command.keyboard_end)
     end)
 
     -- Open arandr to graphically confiugre the displays
@@ -595,6 +655,7 @@ awful.rules.rules = {
         -- and the name shown there might not match defined rules here.
         name = { -- client title
           "Event Tester",  -- xev.
+          "HG_Peer_OffScreenWindow", -- MATLAB offscreen graphics window
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
@@ -643,7 +704,9 @@ awful.rules.rules = {
             -- "org.gnome.Nautilus" -- TODO: exclude dialog windows
             "libreoffice",
             "pcmanfm",
-            "microsoft teams - preview"
+            "microsoft teams - preview",
+            "joplin",
+            "sun-awt-X11-XFramePeer",
         },
         class = { -- second string of`xprop WM_CLASS`
             "Alacritty",

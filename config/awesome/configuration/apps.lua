@@ -10,6 +10,7 @@ return {
         file_manager = "pcmanfm",
         terminal = "alacritty",
         editor_cmd= "alacritty -e " .. editor,
+        code = "code",
 
         rofi = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons",
         calculator = "gnome-calculator",
@@ -35,6 +36,9 @@ return {
         keyboard_layout_1 = "ibus engine xkb:se::swe",
         keyboard_layout_2 = "ibus engine xkb:us::eng",
         keyboard_layout_3 = "ibus engine xkb:de::ger",
+
+        keyboard_home = "xdotool key --clearmodifiers Home",
+        keyboard_end = "xdotool key --clearmodifiers End",
     },
 
     -- List of apps to start once on start-up unless it is not running
