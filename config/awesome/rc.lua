@@ -551,6 +551,11 @@ globalkeys = gears.table.join(globalkeys,
         awful.spawn(apps.default.file_manager)
     end),
 
+    -- open process viewer with Mod+P 
+    awful.key({ modkey }, "p" , function ()
+        awful.spawn(apps.default.process_viewer)
+    end),
+    
     -- open VSCode Mod+C 
     awful.key({ modkey }, "c" , function ()
         awful.spawn(apps.default.code)
@@ -710,6 +715,7 @@ awful.rules.rules = {
         },
         class = { -- second string of`xprop WM_CLASS`
             "Alacritty",
+	        "kitty",
             "winword.exe", -- Word running in Wine
             "excel.exe" -- Excel running in Wine
         },
