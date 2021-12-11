@@ -8,14 +8,15 @@ return {
         -- List of defaults applications
 
         file_manager = "pcmanfm",
-        terminal = "alacritty",
-        editor_cmd= "alacritty -e " .. editor,
+        terminal = "kitty --single-instance",
+        editor_cmd= "kitty --single-instance" .. editor,
         code = "code",
 
         rofi = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons",
         calculator = "gnome-calculator",
         insert_character = "rofimoji",
         screenshot_interactive = "gnome-screenshot --interactive",
+        process_viewer = "kitty --single-instance htop",
 
     },
 
