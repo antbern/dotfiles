@@ -9,3 +9,9 @@ This repository is an attempt to organize and backup my dotfiles.
 **home** contains all dotfiles that lie directly in the home folder. These will be symlinked to `~/` upon bootstrapping.
 
 **scripts** here lies the bootstrap script
+
+## Notes
+
+* Since I am using `kitty` as terminal emulator, you neeed to have the `kitty-terminfo` package installed on any remote machines you SSH into for the terminal to work correctly with programs such as `htop` and `fish`.
+
+For using NVM with Fish shell, install: https://github.com/FabioAntunes/fish-nvm

@@ -60,7 +60,7 @@ beautiful.icon_theme = 'Papirus'
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
+modkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -303,9 +303,9 @@ root.buttons(gears.table.join(
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
+    awful.key({ modkey, "Control" }, "Left",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+    awful.key({ modkey, "Control" }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
@@ -654,6 +654,7 @@ awful.rules.rules = {
           "Pavucontrol",
           "RabbitVCS",
           "MATLABWindow",
+          "GridMapGL using ImGUI",
         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -712,6 +713,7 @@ awful.rules.rules = {
             "microsoft teams - preview",
             "joplin",
             "sun-awt-X11-XFramePeer",
+            "signal",
         },
         class = { -- second string of`xprop WM_CLASS`
             "Alacritty",
