@@ -32,6 +32,7 @@ local apps = require('configuration.apps')
 local power_widget = require("widget.power-meter")
 local music_widget = require("widget.music")
 local cpu_usage_widget = require("widget.cpu_usage")
+local dropbox_widget = require("widget.dropbox_status")
 
 
 require("module.notifications")
@@ -279,6 +280,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            dropbox_widget(),
             music_widget(),
             power_widget(),
             cpu_usage_widget(),
@@ -536,6 +538,9 @@ globalkeys = gears.table.join(globalkeys,
     awful.key({ }, "Print" , function ()
         awful.spawn(apps.default.screenshot_interactive)
     end),
+    awful.key({ modkey, "Control" }, "S" , function ()
+        awful.spawn(apps.default.screenshot_area)
+    end),
 
     awful.key({ modkey }, "Insert" , function ()
         awful.spawn(apps.default.insert_character)
@@ -655,6 +660,8 @@ awful.rules.rules = {
           "RabbitVCS",
           "MATLABWindow",
           "GridMapGL using ImGUI",
+          "baseui",
+          "ui",
         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -714,6 +721,7 @@ awful.rules.rules = {
             "joplin",
             "sun-awt-X11-XFramePeer",
             "signal",
+            "obsidian",
         },
         class = { -- second string of`xprop WM_CLASS`
             "Alacritty",

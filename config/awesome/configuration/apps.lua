@@ -15,7 +15,8 @@ return {
         rofi = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons",
         calculator = "gnome-calculator",
         insert_character = "rofimoji",
-        screenshot_interactive = "gnome-screenshot --interactive",
+        screenshot_interactive = "gnome-screenshot --area --interactive",
+        screenshot_area = "gnome-screenshot --area",
         process_viewer = "kitty --single-instance htop",
 
     },
