@@ -15,3 +15,17 @@ This repository is an attempt to organize and backup my dotfiles.
 * Since I am using `kitty` as terminal emulator, you neeed to have the `kitty-terminfo` package installed on any remote machines you SSH into for the terminal to work correctly with programs such as `htop` and `fish`.
 
 For using NVM with Fish shell, install: https://github.com/FabioAntunes/fish-nvm
+- Requires [`fisher`](https://github.com/jorgebucaran/fisher). After installation, the plugins can be installed using `fisher update` (will also fetch `fish-nvm`)
+
+Also assumes `fzf` is installed on the system (`sudo apt install fzf`)
+
+## Neovim
+Install packer:
+
+https://github.com/wbthomason/packer.nvim
+
+ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+
+Install `ripgrep`.
