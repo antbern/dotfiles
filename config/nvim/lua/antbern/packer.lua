@@ -47,9 +47,25 @@ return require('packer').startup(function(use)
 		}
 	}
 
+	-- might not be good, replace with toggle-term?
+	use('voldikss/vim-floaterm')
+
 	use {
 		'lewis6991/gitsigns.nvim',
 		tag = 'release',
 	}
 
+	use {
+		'nvim-lualine/lualine.nvim',
+		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+	}
+
+	use {
+		'akinsho/bufferline.nvim',
+		tag = "*",
+		requires = 'nvim-tree/nvim-web-devicons'
+	}
+
+	-- For indentation guidelines
+	use "lukas-reineke/indent-blankline.nvim"
 end)

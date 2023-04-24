@@ -1,0 +1,5 @@
+vim.keymap.set("n", "<leader>tt", "<cmd>FloatermToggle<CR>") 
+vim.keymap.set("t", "<leader>tt", "<cmd>FloatermToggle<CR>") 
+vim.keymap.set("t", "<C-h>", "<cmd>FloatermPrev<CR>") 
+vim.keymap.set("t", "<C-l>", "<cmd>FloatermNext<CR>") 
+vim.keymap.set("t", "<C-t>", "<cmd>FloatermNew<CR>") 
