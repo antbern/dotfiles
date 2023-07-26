@@ -35,9 +35,9 @@ return {
         exit_screen_poweroff = "systemctl poweroff",
         exit_screen_reboot ="systemctl reboot",
 
-        keyboard_layout_1 = "ibus engine xkb:se::swe",
-        keyboard_layout_2 = "ibus engine xkb:us::eng",
-        keyboard_layout_3 = "ibus engine xkb:de::ger",
+        keyboard_layout_1 = "ibus engine xkb:us::eng",
+        keyboard_layout_2 = "ibus engine xkb:se::swe",
+        keyboard_layout_3 = "ibus engine xkb:de::deu",
 
         keyboard_home = "xdotool key --clearmodifiers Home",
         keyboard_end = "xdotool key --clearmodifiers End",
