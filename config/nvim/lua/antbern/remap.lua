@@ -39,44 +39,18 @@ vim.keymap.set("n", "Q", "<nop>")
 -- maybe I'll start using tmux one day
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
-vim.keymap.set("n", "<leader>", function ()
-	vim.lsp.buf.format()	
+vim.keymap.set("n", "<leader>", function()
+	vim.lsp.buf.format()
 end)
 
 -- Using quickfix list?
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<leader><C-k>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<leader><C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---vim.keymap.set("b"
-
-
-
-
-
+-- For navigating panes and tmux at the same time (100) (but these are automatically set by the vim-tmux-navigator plugin)
+--vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>")
+--vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>")
+--vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>")
+--vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>")

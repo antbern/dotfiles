@@ -29,3 +29,8 @@ https://github.com/wbthomason/packer.nvim
 
 
 Install `ripgrep`.
+## Tmux
+
+Video: https://www.youtube.com/watch?v=DzNmUNvnB04
+
+Install TPM: https://github.com/tmux-plugins/tpm

@@ -68,4 +68,6 @@ return require('packer').startup(function(use)
 
 	-- For indentation guidelines
 	use "lukas-reineke/indent-blankline.nvim"
+
+	use('christoomey/vim-tmux-navigator')
 end)
