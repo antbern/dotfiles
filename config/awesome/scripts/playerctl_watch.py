@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# requires the gir1.2-playerctl-2.0 package to be installed
+# see https://github.com/lgi-devs/lgi/issues/264
+# could possibly be remade in LUA: https://pastebin.com/FwmbNgMN
 
 import gi
 
