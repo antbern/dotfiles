@@ -1,0 +1,8 @@
+fish_variables
+
+# since fisher installs files into these directories, 
+# add them to ignore to not autmomatically pick them up.
+# For my own scripts, manually force adding them.
+functions/
+completions/
+conf.d/

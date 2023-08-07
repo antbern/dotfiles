@@ -24,7 +24,7 @@ EnableNotifications=true
 HotkeyNotifications=true
 MouseNotifications=true
 PopupNotifications=false
-ExternalNotifications=true
+ExternalNotifications=false
 NotificationTimeout=1500
 
 [(default)]

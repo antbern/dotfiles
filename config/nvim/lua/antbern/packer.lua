@@ -68,6 +68,12 @@ return require('packer').startup(function(use)
 
 	-- For indentation guidelines
 	use "lukas-reineke/indent-blankline.nvim"
-
+	--use { "lukas-reineke/indent-blankline.nvim",
+	--	config = {
+		--		show_current_context = true,
+		--		show_current_context_start = true,
+		--	}
+		--}
+	
 	use('christoomey/vim-tmux-navigator')
 end)

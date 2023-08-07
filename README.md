@@ -34,3 +34,9 @@ Install `ripgrep`.
 Video: https://www.youtube.com/watch?v=DzNmUNvnB04
 
 Install TPM: https://github.com/tmux-plugins/tpm
+
+
+# Graphics drivers on laptop:
+
+Enable focal-proposed and install `libgl1-amber-dri`, `libegl-amber0`, `libglx-amber0` packages.
+This link: https://wiki.ubuntu.com/Testing/EnableProposed also describes how to make it so that apt wont automatically update all packages to `-proposed` versions.
