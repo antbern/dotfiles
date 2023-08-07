@@ -1,0 +1,12 @@
+[user]
+	email = 40672068+antbern@users.noreply.github.com
+	name = antbern
+[core]
+	autocrlf = input
+	editor = nvim
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	gl = log --oneline --graph
