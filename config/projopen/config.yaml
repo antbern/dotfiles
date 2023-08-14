@@ -9,7 +9,7 @@ commands:
     cmd: kitty --single-instance --directory ${path}
   alt2: 
     text: Neovim
-    cmd: kitty --single-instance --directory ${path} tmux -c "nvim ."
+    cmd: kitty --single-instance tmux new-session -c "${path}" "nvim ."
   alt3: 
     text: File Explorer
     cmd: pcmanfm ${path}
