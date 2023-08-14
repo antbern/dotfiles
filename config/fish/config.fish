@@ -15,3 +15,5 @@ if test -e $HOME/anaconda3/bin/conda
 end
 # <<< conda initialize <<<
 
+# For showing all files, including hidden ones
+alias ll="ls -la"

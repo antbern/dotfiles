@@ -13,6 +13,7 @@ return {
         code = "code",
 
         rofi = "rofi -combi-modi run,window,drun -show combi -modi combi -icon-theme Papirus -show-icons",
+		projopen = "projopen.py",
         calculator = "gnome-calculator",
         insert_character = "rofimoji",
         screenshot_interactive = "gnome-screenshot --area --interactive",

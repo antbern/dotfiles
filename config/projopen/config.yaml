@@ -1,0 +1,17 @@
+folders:
+  - "~/Dropbox/Projekt/*"
+  - "~/Dropbox/Programmering/Rust/*"
+  - "~/.dotfiles"
+
+commands:
+  alt1:
+    text: Terminal
+    cmd: kitty --single-instance --directory ${path}
+  alt2: 
+    text: Neovim
+    cmd: kitty --single-instance --directory ${path} tmux -c "nvim ."
+  alt3: 
+    text: File Explorer
+    cmd: pcmanfm ${path}
+  
+
