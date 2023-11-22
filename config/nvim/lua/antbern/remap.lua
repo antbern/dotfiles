@@ -49,6 +49,8 @@ vim.keymap.set("n", "<leader><C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
+
+vim.keymap.set("n", "<leader>w", "<cmd>:w<CR>")
 -- For navigating panes and tmux at the same time (100) (but these are automatically set by the vim-tmux-navigator plugin)
 --vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>")
 --vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>")

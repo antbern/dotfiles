@@ -16,7 +16,8 @@ return require('packer').startup(function(use)
 	--	  vim.cmd('colorscheme rose-pine')
 	--  end})
 
-	use('Mofiqul/dracula.nvim')
+	--use('Mofiqul/dracula.nvim')
+	use { "catppuccin/nvim", as = "catppuccin" }
 
 	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 	use('nvim-treesitter/playground')
@@ -70,10 +71,23 @@ return require('packer').startup(function(use)
 	use "lukas-reineke/indent-blankline.nvim"
 	--use { "lukas-reineke/indent-blankline.nvim",
 	--	config = {
-		--		show_current_context = true,
-		--		show_current_context_start = true,
-		--	}
-		--}
-	
+	--		show_current_context = true,
+	--		show_current_context_start = true,
+	--	}
+	--}
+
 	use('christoomey/vim-tmux-navigator')
+
+	---- install without yarn or npm
+	--use({
+	--	"iamcco/markdown-preview.nvim",
+	--	run = function() vim.fn["mkdp#util#install"]() end,
+	--})
+
+	--use({
+	--	"iamcco/markdown-preview.nvim",
+	--	run = "cd app && npm install",
+	--	setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+	--	ft = { "markdown" },
+	--})
 end)
