@@ -60,6 +60,19 @@ lsp.set_sign_icons({
 	info = '»'
 })
 
+lsp.setup_nvim_cmp({
+	mapping = cmp_mappings,
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
+})
+
+-- Update the diagnostics each time you type!
+vim.diagnostic.config({
+	update_in_insert = true,
+})
+
 lsp.on_attach(function(client, bufnr)
 	local opts = { buffer = bufnr, remap = false }
 
