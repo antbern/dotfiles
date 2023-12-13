@@ -5,7 +5,32 @@ lsp.preset("recommended")
 lsp.ensure_installed({
 	'lua_ls',
 	'rust_analyzer',
+	'pylsp',
 })
+
+require('lspconfig').pylsp.setup({
+	settings = {
+		pylsp = {
+			plugins = {
+				black       = { enabled = true },
+				autopep8    = { enabled = false },
+				yapf        = { enabled = false },
+				flake8      = { enabled = true },
+				pycodestyle = { enabled = false },
+				mccabe      = { enabled = false },
+				pyflakes    = { enabled = false },
+				isort		= { enabled = true  },
+				pylsp_mypy		= { enabled = true, report_progress = true }
+			}
+		}
+	},
+	on_attach = function(client, bufnr)
+		lsp.async_autoformat(client, bufnr)
+	end,
+})
+
+
+lsp.extend_cmp()
 
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -15,6 +40,15 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 	['<C-y>'] = cmp.mapping.confirm({ select = true }),
 	['<C-Space>'] = cmp.mapping.complete(),
 })
+
+lsp.setup_nvim_cmp({
+	mapping = cmp_mappings,
+	sources = {
+		{ name = "nvim_lsp_signature_help" }
+	}
+})
+
+
 lsp.set_preferences({
 	sign_icons = {}
 })
@@ -25,11 +59,6 @@ lsp.set_sign_icons({
 	hint = '⚑',
 	info = '»'
 })
-
-lsp.setup_nvim_cmp({
-	mapping = cmp_mappings
-})
-
 
 lsp.on_attach(function(client, bufnr)
 	local opts = { buffer = bufnr, remap = false }
@@ -45,5 +74,9 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 	vim.keymap.set("n", "<leader>vh", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
+vim.diagnostic.config({
+	update_in_insert = true
+})
 
 lsp.setup()

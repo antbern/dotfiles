@@ -27,7 +27,9 @@ https://github.com/wbthomason/packer.nvim
  git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-
+For python:
+- Install pylsp plugins through the command provided by mason:
+  ``:PylspInstall pyls-black`
 Install `ripgrep`.
 ## Tmux
 

@@ -10,7 +10,7 @@ return require('packer').startup(function(use)
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.1',
 		-- or                            , branch = '0.1.x',
-		requires = { { 'nvim-lua/plenary.nvim' } }
+		requires = { { 'nvim-lua/plenary.nvim' }, {'nvim-tree/nvim-web-devicons'} }
 	}
 	--  use({ 'rose-pine/neovim', as = 'rose-pine', config = function()
 	--	  vim.cmd('colorscheme rose-pine')
@@ -90,4 +90,5 @@ return require('packer').startup(function(use)
 	--	setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
 	--	ft = { "markdown" },
 	--})
+	use('hrsh7th/cmp-nvim-lsp-signature-help')
 end)

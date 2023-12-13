@@ -8,5 +8,10 @@
 	co = checkout
 	br = branch
 	ci = commit
+	ca = commit --amend
+	cn = commit --amend --no-edit
+	fa = fetch --all
 	st = status
 	gl = log --oneline --graph
+[credential]
+	helper = cache

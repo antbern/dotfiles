@@ -56,4 +56,3 @@ vim.keymap.set("n", "<leader>w", "<cmd>:w<CR>")
 --vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>")
 --vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>")
 --vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>")
-

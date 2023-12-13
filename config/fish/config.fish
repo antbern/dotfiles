@@ -1,5 +1,5 @@
 
-# To override the auto activation upon starting the terminal, execute:
+# To override the auto activation upon starting the terminal, execute (once):
 # conda config --set auto_activate_base false
 
 
