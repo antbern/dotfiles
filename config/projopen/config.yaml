@@ -1,6 +1,7 @@
 folders:
   - "~/Dropbox/Projekt/*"
   - "~/Dropbox/Programmering/Rust/*"
+  - "~/Dropbox/Programmering/Rust/esp32/*"
   - "~/.dotfiles"
 
 commands:
