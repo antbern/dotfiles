@@ -154,5 +154,46 @@ require("lazy").setup {
         config = function()
             require("antbern.config.floaterm")
         end,
-    }
+    },
+
+    -- Rust support and integration
+    {
+        "mrcjkb/rustaceanvim",
+        version = "^3",
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+          "mfussenegger/nvim-dap",
+          {
+            "lvimuser/lsp-inlayhints.nvim",
+            opts = {}
+          },
+        },
+        ft = { "rust" },
+        config = function()
+          vim.g.rustaceanvim = {
+            inlay_hints = {
+              highlight = "NonText",
+              auto = false,
+            },
+            tools = {
+              hover_actions = {
+                auto_focus = true,
+              },
+            },
+            server = {
+              on_attach = function(client, bufnr)
+                require("lsp-inlayhints").on_attach(client, bufnr)
+              end
+            }
+          }
+        end
+    },
+    {
+        'saecki/crates.nvim',
+        tag = 'stable',
+        config = function()
+            require('crates').setup()
+        end,
+    },
 }
+      
