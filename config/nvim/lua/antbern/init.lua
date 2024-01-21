@@ -1,3 +1,4 @@
 require("antbern.remap")
-require("antbern.packer")
+require("antbern.plugins")
 require("antbern.set")
+require("antbern.colors")
