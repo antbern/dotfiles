@@ -20,17 +20,10 @@ For using NVM with Fish shell, install: https://github.com/FabioAntunes/fish-nvm
 Also assumes `fzf` is installed on the system (`sudo apt install fzf`)
 
 ## Neovim
-Install packer:
-
-https://github.com/wbthomason/packer.nvim
-
- git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
 For python:
 - Install pylsp plugins through the command provided by mason:
   ``:PylspInstall pyls-black`
-Install `ripgrep`.
+Install `ripgrep` and `fzf`.
 ## Tmux
 
 Video: https://www.youtube.com/watch?v=DzNmUNvnB04
