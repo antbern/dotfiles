@@ -6,3 +6,7 @@ vim.keymap.set('n', '<leader>ps', function()
 	-- Note: requires `ripgrep` to be installed
 	builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)
+
+vim.keymap.set('n', '<leader>lg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>of', builtin.oldfiles, {})
+vim.keymap.set('n', '<leader>fg', builtin.current_buffer_fuzzy_find, {})

@@ -159,7 +159,7 @@ require("lazy").setup {
     -- Rust support and integration
     {
         "mrcjkb/rustaceanvim",
-        version = "^3",
+        version = "^4",
         dependencies = {
           "nvim-lua/plenary.nvim",
           "mfussenegger/nvim-dap",
@@ -176,6 +176,12 @@ require("lazy").setup {
               auto = false,
             },
             tools = {
+			  autoSetHints = true,
+			  inlay_hints = {
+	            show_parameter_hints = true,
+                parameter_hints_prefix = "in: ", -- "<- "
+                other_hints_prefix = "out: "     -- "=> "  
+			  },
               hover_actions = {
                 auto_focus = true,
               },

@@ -17,3 +17,18 @@ end
 
 # For showing all files, including hidden ones
 alias ll="ls -la"
+
+
+alias lg="lazygit"
+
+# for attaching to the devcontainer
+function dca --description 'Attach to the running devcontainer'
+	# first get the ipc file path
+	# See https://github.com/microsoft/vscode-remote-release/issues/4202
+	set container_name "cryptpayrs_devcontainer-devcontainer-1"
+	set IPC_FILE (docker exec --user=vscode $container_name find /tmp -name "vscode-remote-containers-ipc*" | head -1)
+
+	docker exec -e REMOTE_CONTAINERS_IPC=$IPC_FILE -it --user=vscode --workdir "/workspaces/cryptpay.rs" $container_name fish
+
+end
+
