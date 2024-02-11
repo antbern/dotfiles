@@ -1,1 +1,2 @@
-require("antbern")
+require("antbern.core")
+require("antbern.lazy")
