@@ -5,6 +5,7 @@ return {
 		main = "ibl",
 		opts = {}
 	},
+	{ "tpope/vim-surround" },
 
 	{
 		'hrsh7th/cmp-nvim-lsp-signature-help'
