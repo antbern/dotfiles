@@ -731,7 +731,8 @@ awful.rules.rules = {
             "Alacritty",
 	        "kitty",
             "winword.exe", -- Word running in Wine
-            "excel.exe" -- Excel running in Wine
+            "excel.exe", -- Excel running in Wine
+            "firefox"
         },
         type = {
             "dialog"
