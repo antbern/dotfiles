@@ -5,7 +5,7 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		'hrsh7th/cmp-nvim-lsp-signature-help',
-		"lvimuser/lsp-inlayhints.nvim",
+		-- "lvimuser/lsp-inlayhints.nvim", -- not needed when using neovim >= 0.10
 	},
 	config = function()
 		-- import lspconfig plugin
@@ -15,7 +15,7 @@ return {
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local keymap = vim.keymap -- for conciseness
-
+		
 		local opts = { noremap = true, silent = true }
 		local on_attach = function(client, bufnr)
 			opts.buffer = bufnr
@@ -67,7 +67,6 @@ return {
 					border = "rounded"
 				}
 			}, bufnr)
-
 		end
 
 		-- used to enable autocompletion (assign to every lsp server config)
