@@ -12,7 +12,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("antbern.plugins", {
+require("lazy").setup({
+	{ import = "antbern.plugins"},
+	{ import = "antbern.plugins.lsp" },
+	}, {
 	install = {
 		colorscheme = { "catppuchin" },
 	},

@@ -7,9 +7,9 @@ return {
 	},
 	{ "tpope/vim-surround" },
 
-	{
-		'hrsh7th/cmp-nvim-lsp-signature-help'
-	},
+	-- {
+	-- 	'hrsh7th/cmp-nvim-lsp-signature-help'
+	-- },
 
 	-- TODO: should I keep these?
 	-- File quicklist
