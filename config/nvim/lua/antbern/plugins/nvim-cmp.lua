@@ -37,6 +37,7 @@ return {
 
 			-- sources for autocompletion
 			sources = cmp.config.sources({
+				{ name = "nvim_lsp_signature_help" }, -- signature help
 				{ name = "nvim_lsp" }, -- LSP completions
 				{ name = "luasnip" }, -- snippets
 				{ name = "buffer" }, -- text within the buffer

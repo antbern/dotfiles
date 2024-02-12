@@ -4,6 +4,8 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
+		'hrsh7th/cmp-nvim-lsp-signature-help',
+		"lvimuser/lsp-inlayhints.nvim",
 	},
 	config = function()
 		-- import lspconfig plugin
@@ -57,6 +59,15 @@ return {
 
 			opts.desc = "Restart LSP"
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+			-- attach lsp_signature to the buffer as well
+			require("lsp_signature").on_attach({
+				bind = true, -- This is mandatory, otherwise border config won't get registered.
+				handler_opts = {
+					border = "rounded"
+				}
+			}, bufnr)
+
 		end
 
 		-- used to enable autocompletion (assign to every lsp server config)
@@ -76,11 +87,18 @@ return {
 			on_attach = on_attach,
 		})
 
-		-- -- configure rust language server
-		-- lspconfig["rust_analyzer"].setup({
-		-- 	capabilities = capabilities,
-		-- 	on_attach = on_attach,
-		-- })
+		-- configure rust language server
+		lspconfig["rust_analyzer"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				['rust-analyzer'] = {
+					diagnostics = {
+						enable = false,
+					}
+				}
+			},
+		})
 
 		-- configure lua server (with special settings)
 		lspconfig["lua_ls"].setup({
