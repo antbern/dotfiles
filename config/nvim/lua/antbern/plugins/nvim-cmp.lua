@@ -7,6 +7,7 @@ return {
 		"L3MON4D3/LuaSnip",       -- snippet engine
 		"saadparwaiz1/cmp_luasnip", -- for autocompletion
 		"rafamadriz/friendly-snippets", -- useful snippets
+		"hrsh7th/cmp-cmdline",    -- for auocompletion in the command line
 	},
 	config = function()
 		local cmp = require("cmp")
@@ -38,11 +39,32 @@ return {
 			-- sources for autocompletion
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp_signature_help" }, -- signature help
-				{ name = "nvim_lsp" }, -- LSP completions
-				{ name = "luasnip" }, -- snippets
-				{ name = "buffer" }, -- text within the buffer
-				{ name = "path" }, -- file system paths
+				{ name = "nvim_lsp" },    -- LSP completions
+				{ name = "luasnip" },     -- snippets
+				{ name = "buffer" },      -- text within the buffer
+				-- { name = "path" },        -- file system paths
 			})
+		})
+
+		-- '/' cmdline setup
+		cmp.setup.cmdline('/', {
+			-- mapping = cmp.mapping.preset.cmdline(),
+			sources = {
+				{ name = "buffer" },
+			},
+		})
+
+		-- ':' cmdline setup
+		cmp.setup.cmdline(':', {
+			-- mapping = cmp.mapping.preset.cmdline(),
+			sources = cmp.config.sources({
+				{ name = "path" },
+			}, {
+				{
+					name = 'cmdline',
+					option = { ignore_cmds = { 'Man', '!' } }
+				}
+			}),
 		})
 	end
 
