@@ -15,7 +15,7 @@ return {
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local keymap = vim.keymap -- for conciseness
-		
+
 		local opts = { noremap = true, silent = true }
 		local on_attach = function(client, bufnr)
 			opts.buffer = bufnr
@@ -67,6 +67,13 @@ return {
 					border = "rounded"
 				}
 			}, bufnr)
+
+			-- if we are running neovim 0.10 or later, enable inlay hints. Otherwise, use lsp-inlayhints.nvim
+			if vim.fn.has("nvim-0.10") == 1 then
+				vim.lsp.inlay_hint.enable(bufnr, true)
+			else
+				require("lsp-inlayhints").on_attach(client, bufnr)
+			end
 		end
 
 		-- used to enable autocompletion (assign to every lsp server config)
