@@ -16,10 +16,8 @@ return {
 		projopen = "projopen.py",
         calculator = "gnome-calculator",
         insert_character = "rofimoji",
-        screenshot_interactive = "gnome-screenshot --area --interactive",
-        screenshot_area = "gnome-screenshot --area",
+        screenshot_interactive = "flameshot gui",
         process_viewer = "kitty --single-instance htop",
-
     },
 
     command = {
@@ -63,6 +61,7 @@ return {
         "dropbox start", -- dropbox
         "xss-lock -n " .. paths.script_dir .. "dim-screen.sh -- " .. paths.script_dir .. "i3lock-wrapper.sh", -- lock screen on suspend
         -- "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py", --  Sidewinder X4 keyboard hidraw interface
-        "workrave"
+        "workrave",
+		"flameshot", --amazing tool for making screenshots
     }
 }

@@ -21,7 +21,8 @@ sudo apt-get install \
     playerctl \
     i3lock-fancy \
     numlockx \
-    xdotool
+    xdotool \
+	flameshot
     
 # sound-switcher-indicator / indicator-sound-switcher
 

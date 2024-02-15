@@ -543,7 +543,7 @@ globalkeys = gears.table.join(globalkeys,
         awful.spawn(apps.default.screenshot_interactive)
     end),
     awful.key({ modkey, "Control" }, "S" , function ()
-        awful.spawn(apps.default.screenshot_area)
+        awful.spawn(apps.default.screenshot_interactive)
     end),
 
     awful.key({ modkey }, "Insert" , function ()
