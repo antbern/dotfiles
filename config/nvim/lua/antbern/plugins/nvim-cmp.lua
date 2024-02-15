@@ -8,6 +8,12 @@ return {
 		"saadparwaiz1/cmp_luasnip", -- for autocompletion
 		"rafamadriz/friendly-snippets", -- useful snippets
 		"hrsh7th/cmp-cmdline",    -- for auocompletion in the command line
+		{
+			"zbirenbaum/copilot-cmp",
+			config = function()
+				require("copilot_cmp").setup()
+			end
+		}
 	},
 	config = function()
 		local cmp = require("cmp")
@@ -38,6 +44,7 @@ return {
 
 			-- sources for autocompletion
 			sources = cmp.config.sources({
+				{ name = "copilot" },
 				{ name = "nvim_lsp_signature_help" }, -- signature help
 				{ name = "nvim_lsp" },    -- LSP completions
 				{ name = "luasnip" },     -- snippets
