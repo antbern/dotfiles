@@ -30,6 +30,11 @@ Video: https://www.youtube.com/watch?v=DzNmUNvnB04
 
 Install TPM: https://github.com/tmux-plugins/tpm
 
+## Updating `kitty`
+From [the docs](https://sw.kovidgoyal.net/kitty/binary/):
+```bash
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+```
 
 # Graphics drivers on laptop:
 
