@@ -15,12 +15,6 @@ if test -e $HOME/anaconda3/bin/conda
 end
 # <<< conda initialize <<<
 
-# For showing all files, including hidden ones
-alias ll="ls -la"
-
-
-alias lg="lazygit"
-
 # for attaching to the devcontainer
 function dca --description 'Attach to the running devcontainer'
 	# first get the ipc file path
@@ -32,3 +26,32 @@ function dca --description 'Attach to the running devcontainer'
 
 end
 
+
+# brew install bat exa lazygit zoxide starship
+
+# setup aliases for programs if they exist
+if command -q bat
+    alias cat="bat"
+end
+
+if command -q exa
+	alias ls="exa"
+	# For showing all files, including hidden ones
+	alias ll="exa -la"
+	alias tree="exa --tree"
+end
+
+if command -q lazygit
+    alias lg="lazygit"
+end
+
+# better "cd" command
+if command -q zoxide
+	zoxide init fish --cmd cd | source
+	alias zz="cd -"
+end
+
+# starship prompt
+if command -q starship
+	starship init fish | source	
+end
