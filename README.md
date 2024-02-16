@@ -36,6 +36,12 @@ From [the docs](https://sw.kovidgoyal.net/kitty/binary/):
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 ```
 
+## Installing `starship` prompts
+From [the docs](https://starship.rs/guide/#%F0%9F%9A%80-installation):
+```bash
+curl -sS https://starship.rs/install.sh | sh
+```
+
 # Graphics drivers on laptop:
 
 Enable focal-proposed and install `libgl1-amber-dri`, `libegl-amber0`, `libglx-amber0` packages.

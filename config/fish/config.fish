@@ -27,7 +27,7 @@ function dca --description 'Attach to the running devcontainer'
 end
 
 
-# brew install bat exa lazygit zoxide starship
+# brew install bat exa lazygit zoxide 
 
 # setup aliases for programs if they exist
 if command -q bat
