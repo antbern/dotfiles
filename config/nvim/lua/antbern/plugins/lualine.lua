@@ -7,16 +7,16 @@ return {
 		local lualine = require("lualine")
 		local lazy_status = require("lazy.status")
 
-		local lsp_progress = require("lsp-progress")
+		-- local lsp_progress = require("lsp-progress")
 
 
 		lualine.setup({
 			options = { theme = "catppuccin" },
 			sections = {
-				lualine_c = {
-					-- invoke `progress` here.
-					lsp_progress.progress,
-				},
+				-- lualine_c = {
+				-- 	-- invoke `progress` here.
+				-- 	lsp_progress.progress,
+				-- },
 				lualine_x = {
 					{
 						lazy_status.updates,
