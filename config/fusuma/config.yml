@@ -1,37 +1,33 @@
 swipe:
-  3:
+  3: # mainly browser navigation
     left:
-      command: 'xdotool key alt+Right'
-    right:
+      # go back
       command: 'xdotool key alt+Left'
+    right:
+      # go forward
+      command: 'xdotool key alt+Right'
     up:
+      # open new tab
       command: 'xdotool key ctrl+t'
     down:
+      # close tab
       command: 'xdotool key ctrl+w'
   4:
+    # make these cycle the awesome workspaces
     left:
-      command: 'xdotool key super+Right'
+      command: 'xdotool key alt+ctrl+Left'
     right:
-      command: 'xdotool key super+Left'
-    up:
-      command: 'xdotool key super+a'
-    down:
-      command: 'xdotool key super+s'
+      command: 'xdotool key alt+ctrl+Right' 
 
 pinch:
   2:
     in:
-      command: 'xdotool key ctrl+plus'
-    out:
       command: 'xdotool key ctrl+minus'
-  4:
-    in:
-      command: 'xdotool key super+a'
     out:
-      command: 'xdotool key super+s'
-
+      command: 'xdotool key ctrl+plus'
+ 
 threshold:
-  swipe: 0.3
+  swipe: 0.2
   pinch: 0.1
 
 interval:
