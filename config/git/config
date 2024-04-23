@@ -13,5 +13,6 @@
 	fa = fetch --all
 	st = status
 	gl = log --oneline --graph
+	staash = stash --include-untracked
 [credential]
 	helper = cache
