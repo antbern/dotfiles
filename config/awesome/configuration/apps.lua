@@ -8,7 +8,7 @@ return {
         -- List of defaults applications
 
         file_manager = "pcmanfm",
-        terminal = "kitty --single-instance",
+        terminal = "kitty --single-instance fish",
         editor_cmd= "kitty --single-instance" .. editor,
         code = "code",
 
