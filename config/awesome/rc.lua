@@ -284,7 +284,7 @@ awful.screen.connect_for_each_screen(function(s)
 			s.mypromptbox,
 		},
 		s.mytasklist, -- Middle widget
-		{             -- Right widgets
+		{       -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
 			dropbox_widget(),
 			music_widget(),
@@ -648,15 +648,15 @@ awful.rules.rules = {
 	-- Floating clients.
 	{
 		rule_any = {
-			instance = {              -- first string of`xprop WM_CLASS`
-				"DTA",                -- Firefox addon DownThemAll.
-				"copyq",              -- Includes session name in class.
+			instance = {        -- first string of`xprop WM_CLASS`
+				"DTA",          -- Firefox addon DownThemAll.
+				"copyq",        -- Includes session name in class.
 				"pinentry",
-				"gnome-calculator",   -- gnome-calculator
+				"gnome-calculator", -- gnome-calculator
 				"indicator-sound-switcher", -- Indicator-sound-switcher
 				"nm-connection-editor", -- nm-applet connection editor
 			},
-			class = {                 -- second string of`xprop WM_CLASS`
+			class = {           -- second string of`xprop WM_CLASS`
 				"Arandr",
 				"Blueman-manager",
 				"Gpick",
@@ -678,14 +678,14 @@ awful.rules.rules = {
 
 			-- Note that the name property shown in xprop might be set slightly after creation of the client
 			-- and the name shown there might not match defined rules here.
-			name = {                 -- client title
-				"Event Tester",      -- xev.
+			name = {           -- client title
+				"Event Tester", -- xev.
 				"HG_Peer_OffScreenWindow", -- MATLAB offscreen graphics window
 			},
 			role = {
 				"AlarmWindow", -- Thunderbird's calendar.
 				"ConfigManager", -- Thunderbird's about:config.
-				"pop-up",  -- e.g. Google Chrome's (detached) Developer Tools.
+				"pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
 			}
 		},
 		properties = { floating = true }
@@ -807,7 +807,7 @@ client.connect_signal("request::titlebars", function(c)
 			buttons = buttons,
 			layout  = wibox.layout.fixed.horizontal
 		},
-		{     -- Middle
+		{ -- Middle
 			{ -- Title
 				align  = "center",
 				widget = awful.titlebar.widget.titlewidget(c)
