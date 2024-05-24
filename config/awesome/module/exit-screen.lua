@@ -23,15 +23,15 @@ local dpi = require("beautiful").xresources.apply_dpi
 
 local apps = require("configuration.apps")
 
-local icon_font = 'RobotoMono NF 48'
-local text_font = 'Source Code Pro 14'
+local text_font = 'JetBrainsMono NF 14'
+local icon_font = 'JetBrainsMono NFP 48'
 
 local icons = {
-	lock = '',
-	logout = '',
-	suspend = '鈴',
+	lock = '',
+	logout = '󰍃',
+	suspend = '󰒲',
 	poweroff = '',
-	reboot = 'ﰇ'
+	reboot = ''
 }
 
 
