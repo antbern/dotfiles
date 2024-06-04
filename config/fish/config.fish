@@ -22,7 +22,7 @@ function dca --description 'Attach to the running devcontainer'
 	set container_name "cryptpayrs_devcontainer-devcontainer-1"
 	set IPC_FILE (docker exec --user=vscode $container_name find /tmp -name "vscode-remote-containers-ipc*" | head -1)
 
-	docker exec -e REMOTE_CONTAINERS_IPC=$IPC_FILE -it --user=vscode --workdir "/workspaces/cryptpay.rs" $container_name fish
+	docker exec -e REMOTE_CONTAINERS_IPC=$IPC_FILE -it --user=vscode --workdir "/workspaces/cryptpay.rs" $container_name fish -c tmux
 
 end
 
