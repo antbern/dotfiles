@@ -70,7 +70,7 @@ return {
 
 			-- if we are running neovim 0.10 or later, enable inlay hints. Otherwise, use lsp-inlayhints.nvim
 			if vim.fn.has("nvim-0.10") == 1 then
-				vim.lsp.inlay_hint.enable(bufnr, true)
+				vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 			else
 				require("lsp-inlayhints").on_attach(client, bufnr)
 			end

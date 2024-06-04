@@ -34,11 +34,13 @@ if command -q bat
     alias cat="bat"
 end
 
-if command -q exa
-	alias ls="exa"
+if command -q eza
+	alias ls="eza"
 	# For showing all files, including hidden ones
-	alias ll="exa -la"
-	alias tree="exa --tree"
+	alias ll="eza -la"
+	alias tree="eza --tree"
+	alias l="eza -l --icons --git -a"
+	alias lt="eza --tree --level=2 --long --icons --git"
 end
 
 if command -q lazygit
@@ -50,6 +52,11 @@ if command -q zoxide
 	zoxide init fish --cmd cd | source
 	alias zz="cd -"
 end
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
 
 # starship prompt
 if command -q starship
