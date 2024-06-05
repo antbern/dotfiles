@@ -1,22 +1,33 @@
 return {
 	'nvim-lualine/lualine.nvim',
-	dependencies = { 'nvim-tree/nvim-web-devicons' },
+	dependencies = {
+		'nvim-tree/nvim-web-devicons',
+		"folke/trouble.nvim",
+	},
 	config = function()
 		vim.opt.showmode = false
 
 		local lualine = require("lualine")
 		local lazy_status = require("lazy.status")
 
-		-- local lsp_progress = require("lsp-progress")
-
+		local trouble = require("trouble")
+		local symbols = trouble.statusline({
+			mode = "lsp_document_symbols",
+			groups = {},
+			title = false,
+			filter = { range = true },
+			format = "{kind_icon}{symbol.name:Normal}",
+			-- The following line is needed to fix the background color
+			-- Set it to the lualine section you want to use
+			hl_group = "lualine_c_normal",
+		})
 
 		lualine.setup({
 			options = { theme = "catppuccin" },
 			sections = {
-				-- lualine_c = {
-				-- 	-- invoke `progress` here.
-				-- 	lsp_progress.progress,
-				-- },
+				lualine_c = {
+					{ symbols.get, cond = symbols.has },
+				},
 				lualine_x = {
 					{
 						lazy_status.updates,
@@ -28,14 +39,6 @@ return {
 					{ "filetype" },
 				},
 			},
-		})
-
-		-- listen lsp-progress event and refresh lualine
-		vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
-		vim.api.nvim_create_autocmd("User", {
-			group = "lualine_augroup",
-			pattern = "LspProgressStatusUpdated",
-			callback = lualine.refresh,
 		})
 	end
 }
