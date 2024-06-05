@@ -41,9 +41,10 @@ return {
 			}
 		})
 
-		vim.keymap.set("n", "<leader>q", "<cmd>:BufferLineCyclePrev<CR>")
-		vim.keymap.set("n", "<leader>e", "<cmd>:BufferLineCycleNext<CR>")
-		vim.keymap.set("n", "<leader>x", "<cmd>:BufferLinePickClose<CR>")
+		-- These conflict with some other keybindings and I rarely used them anyways
+		-- vim.keymap.set("n", "<leader>q", "<cmd>:BufferLineCyclePrev<CR>")
+		-- vim.keymap.set("n", "<leader>e", "<cmd>:BufferLineCycleNext<CR>")
+		-- vim.keymap.set("n", "<leader>x", "<cmd>:BufferLinePickClose<CR>")
 
 
 		vim.keymap.set("n", "<leader>1", "<cmd>:BufferLineGoToBuffer 1<CR>")

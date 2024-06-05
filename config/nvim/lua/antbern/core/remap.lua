@@ -76,3 +76,4 @@ keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 
 keymap.set("n", "<leader>w", "<cmd>:w<CR>")
+keymap.set("n", "<leader>ww", "<cmd>:wa<CR>")
