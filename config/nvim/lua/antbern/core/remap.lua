@@ -64,7 +64,7 @@ keymap.set("n", "Q", "<nop>")
 -- maybe I'll start using tmux one day
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
-keymap.set("n", "<leader>", function()
+keymap.set("n", "<leader><leader>", function()
 	vim.lsp.buf.format()
 end)
 
@@ -77,3 +77,15 @@ keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 keymap.set("n", "<leader>w", "<cmd>:w<CR>")
 keymap.set("n", "<leader>ww", "<cmd>:wa<CR>")
+
+
+-- folding, see: https://www.jackfranklin.co.uk/blog/code-folding-in-vim-neovim/
+local function close_all_folds()
+	vim.api.nvim_exec2("%foldc!", { output = false })
+end
+local function open_all_folds()
+	vim.api.nvim_exec2("%foldo!", { output = false })
+end
+
+vim.keymap.set("n", "<leader>zs", close_all_folds, { desc = "[s]hut all folds" })
+vim.keymap.set("n", "<leader>zo", open_all_folds, { desc = "[o]pen all folds" })
