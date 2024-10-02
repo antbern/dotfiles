@@ -58,6 +58,9 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+if command -q cargo
+	alias cfa="cargo fmt --all"
+end
 # starship prompt
 if command -q starship
 	starship init fish | source	
