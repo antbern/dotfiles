@@ -1,4 +1,8 @@
 function __ignore_target_folders --on-variable PWD --description 'Ignore Rust target folders automatically'
+	if not command -q attr
+        return
+	end
+
 	if test -d "$PWD/target"
 		# make sure the file is not already ignored
 		if attr -q -g com.dropbox.ignored "$PWD/target" | read x
