@@ -62,5 +62,6 @@ return {
 		-- "$DOTFILES_ROOT/other/sidewinder_x4/sidewinder_x4_hidraw.py", --  Sidewinder X4 keyboard hidraw interface
 		"workrave",
 		"flameshot", --amazing tool for making screenshots
+		"kmonad $DOTFILES_ROOT/config/kmonad/config.kbd", -- kmonad for custom keyboard layout and home row mods
 	}
 }
