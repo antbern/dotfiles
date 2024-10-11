@@ -12,11 +12,6 @@ return {
 		vim.api.nvim_set_keymap("i", "<C-Enter>", "<Plug>(copilot_accept)", {})
 		vim.api.nvim_set_keymap("i", "<C-n>", "<Plug>(copilot_next)", {})
 		vim.api.nvim_set_keymap("i", "<C-p>", "<Plug>(copilot_prev)", {})
-		
-	
-
-
-
 	end,
 
 }
