@@ -12,21 +12,23 @@ local dropbox_cmd = 'dropbox status'
 local interval = 5
 
 local factory = function()
+	local textbox = wibox.widget {
 
-    local widget = wibox.widget{
-        -- markup = 'This <i>is</i> a <b>textbox</b>!!!',
-        align  = 'center',
-        valign = 'center',
-        widget = wibox.widget.textbox
-    }
+		align  = 'center',
+		valign = 'center',
+		widget = wibox.widget.textbox
 
-    awful.widget.watch(dropbox_cmd, interval, function(_, stdout)
-        widget.text = stdout
-    end, widget)
+	}
+	local widget = wibox.widget {
+		textbox,
+		width    = 75,
+		strategy = "min",
+		layout   = wibox.container.constraint
+	}
 
-    return awful.widget.watch(dropbox_cmd, interval)
-    
-    -- return widget
+	return awful.widget.watch(dropbox_cmd, interval, function(_, stdout)
+		textbox:set_text(stdout)
+	end, widget)
 end
 
 return factory

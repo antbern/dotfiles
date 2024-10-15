@@ -37,6 +37,7 @@ local power_widget = require("widget.power-meter")
 local music_widget = require("widget.music")
 local cpu_usage_widget = require("widget.cpu_usage")
 local dropbox_widget = require("widget.dropbox_status")
+local dropbox_ignore_widget = require("widget.dropbox_ignore")
 
 
 require("module.notifications")
@@ -287,6 +288,7 @@ awful.screen.connect_for_each_screen(function(s)
 		{       -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
 			dropbox_widget(),
+			dropbox_ignore_widget(),
 			music_widget(),
 			power_widget(),
 			cpu_usage_widget(),
