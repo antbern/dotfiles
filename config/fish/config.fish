@@ -26,6 +26,17 @@ function dca --description 'Attach to the running devcontainer'
 
 end
 
+# for attaching to the second devcontainer
+function dcac --description 'Attach to the running second devcontainer'
+	# first get the ipc file path
+	# See https://github.com/microsoft/vscode-remote-release/issues/4202
+	set container_name "clone-cryptpay-k8s_devcontainer-devcontainer-1"
+	set IPC_FILE (docker exec --user=vscode $container_name find /tmp -name "vscode-remote-containers-ipc*" | head -1)
+
+	docker exec -e REMOTE_CONTAINERS_IPC=$IPC_FILE -it --user=vscode --workdir "/workspaces/clone-cryptpay-k8s" $container_name fish -c tmux
+
+end
+
 
 # brew install bat exa lazygit zoxide 
 
