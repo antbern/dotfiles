@@ -87,6 +87,18 @@ return {
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
 
+		-- try to load local `.lspconfig.json` file
+		local function json_file(path)
+			local file = io.open(path, "rb")
+			if not file then
+				return {}
+			end
+			local content = file:read("*a")
+			file:close()
+			return vim.json.decode(content) or {}
+		end
+		local local_config = json_file(".lspconfig.json")
+
 		-- configure html language server
 		lspconfig["html"].setup({
 			capabilities = capabilities,
@@ -94,15 +106,13 @@ return {
 		})
 
 		-- configure rust language server
+		local rust_analyzer_config = local_config["rust_analyzer"] or {}
+		rust_analyzer_config["diagnostics"] = { enable = false }
 		lspconfig["rust_analyzer"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = {
-				['rust-analyzer'] = {
-					diagnostics = {
-						enable = false,
-					}
-				}
+				['rust-analyzer'] = rust_analyzer_config
 			},
 		})
 
