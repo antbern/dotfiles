@@ -89,3 +89,13 @@ end
 
 vim.keymap.set("n", "<leader>zs", close_all_folds, { desc = "[s]hut all folds" })
 vim.keymap.set("n", "<leader>zo", open_all_folds, { desc = "[o]pen all folds" })
+
+-- Highligt when yanking text
+-- See: `:help vim.highlight.on_yank()`
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = 'Highlight when yanking text',
+	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+	callback = function ()
+		vim.highlight.on_yank();
+	end
+})
