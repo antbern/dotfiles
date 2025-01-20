@@ -5,7 +5,6 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		'hrsh7th/cmp-nvim-lsp-signature-help',
-		-- "lvimuser/lsp-inlayhints.nvim", -- not needed when using neovim >= 0.10
 	},
 	config = function()
 		-- import lspconfig plugin
@@ -68,11 +67,11 @@ return {
 				}
 			}, bufnr)
 
-			-- if we are running neovim 0.10 or later, enable inlay hints. Otherwise, use lsp-inlayhints.nvim
+			-- if we are running neovim 0.10 or later, enable inlay hints.
 			if vim.fn.has("nvim-0.10") == 1 then
 				vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 			else
-				require("lsp-inlayhints").on_attach(client, bufnr)
+				error("Please upgrade to neovim 0.10 or later")
 			end
 		end
 
