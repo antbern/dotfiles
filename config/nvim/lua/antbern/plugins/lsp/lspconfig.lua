@@ -1,17 +1,11 @@
 return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-		{ "antosha417/nvim-lsp-file-operations", config = true },
-		'hrsh7th/cmp-nvim-lsp-signature-help',
-	},
+	dependencies = {},
 	config = function()
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
-
-		-- import cmp-nvim-lsp plugin
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
+		local blink_cmp = require("blink.cmp")
 
 		local keymap = vim.keymap -- for conciseness
 
@@ -59,14 +53,6 @@ return {
 			opts.desc = "Restart LSP"
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 
-			-- attach lsp_signature to the buffer as well
-			require("lsp_signature").on_attach({
-				bind = true, -- This is mandatory, otherwise border config won't get registered.
-				handler_opts = {
-					border = "rounded"
-				}
-			}, bufnr)
-
 			-- if we are running neovim 0.10 or later, enable inlay hints.
 			if vim.fn.has("nvim-0.10") == 1 then
 				vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
@@ -94,7 +80,8 @@ return {
 		})
 
 		-- used to enable autocompletion (assign to every lsp server config)
-		local capabilities = cmp_nvim_lsp.default_capabilities()
+		-- local capabilities = cmp_nvim_lsp.default_capabilities()
+		local capabilities = blink_cmp.get_lsp_capabilities()
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
