@@ -3,8 +3,6 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {},
 	config = function()
-		-- import lspconfig plugin
-		local lspconfig = require("lspconfig")
 		local blink_cmp = require("blink.cmp")
 
 		local keymap = vim.keymap -- for conciseness
@@ -42,10 +40,10 @@ return {
 			keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
 			opts.desc = "Go to previous diagnostic"
-			keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+			keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts) -- jump to previous diagnostic in buffer
 
 			opts.desc = "Go to next diagnostic"
-			keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+			keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts) -- jump to next diagnostic in buffer
 
 			opts.desc = "Show documentation for what is under cursor"
 			keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
@@ -67,7 +65,7 @@ return {
 				local client = vim.lsp.get_client_by_id(args.data.client_id)
 				if not client then return end
 
-				if client.supports_method('textDocument/formatting') then
+				if client:supports_method('textDocument/formatting') then
 					-- Format the current buffer on save
 					vim.api.nvim_create_autocmd('BufWritePre', {
 						buffer = args.buf,
@@ -84,12 +82,28 @@ return {
 		local capabilities = blink_cmp.get_lsp_capabilities()
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
-		-- (not in youtube nvim video)
-		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		end
+		vim.diagnostic.config({
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = ' ',
+					[vim.diagnostic.severity.WARN] = ' ',
+					[vim.diagnostic.severity.HINT] = '󰠠 ',
+					[vim.diagnostic.severity.INFO] = ' ',
+				},
+				texthl = {
+					[vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+					[vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+					[vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+					[vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+				},
+				numhl = {
+					[vim.diagnostic.severity.ERROR] = '',
+					[vim.diagnostic.severity.WARN] = '',
+					[vim.diagnostic.severity.HINT] = '',
+					[vim.diagnostic.severity.INFO] = '',
+				},
+			},
+		})
 
 		-- try to load local `.lspconfig.json` file
 		local function json_file(path)
@@ -98,13 +112,24 @@ return {
 				return {}
 			end
 			local content = file:read("*a")
+			-- print(content)
 			file:close()
 			return vim.json.decode(content) or {}
 		end
 		local local_config = json_file(".lspconfig.json")
+		-- # print table
+		-- print(vim.inspect(local_config))
 
 		-- configure html language server
-		lspconfig["html"].setup({
+		vim.lsp.enable("html")
+		vim.lsp.config("html", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		-- Python
+		vim.lsp.enable("pyright")
+		vim.lsp.config("pyright", {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
@@ -112,7 +137,8 @@ return {
 		-- configure rust language server
 		local rust_analyzer_config = local_config["rust_analyzer"] or {}
 		rust_analyzer_config["diagnostics"] = { enable = false }
-		lspconfig["rust_analyzer"].setup({
+		vim.lsp.enable("rust_analyzer")
+		vim.lsp.config('rust_analyzer', {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = {
@@ -121,7 +147,8 @@ return {
 		})
 
 		-- configure lua server (with special settings)
-		lspconfig["lua_ls"].setup({
+		vim.lsp.enable("lua_ls")
+		vim.lsp.config('lua_ls', {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = { -- custom settings for lua
