@@ -71,8 +71,31 @@ alias .....="cd ../../../.."
 
 if command -q cargo
 	alias cfa="cargo fmt --all"
+	alias c="cargo"
 end
 # starship prompt
 if command -q starship
 	starship init fish | source	
 end
+
+if command -q fzf
+	fzf --fish | source
+end
+
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
+
+
+### Adapted from https://medium.com/@GroundControl/better-git-diffs-with-fzf-89083739a9cb
+function fzfdiff -d "Inline diff with fzf for searching a file"
+	set root (git rev-parse --show-toplevel)
+	if test $status -eq 0
+		pushd $root
+		set preview "git diff $argv --color=always -- {-1}"
+		git diff $argv --name-only | fzf -m --ansi --preview $preview
+		popd
+	end
+end
+
