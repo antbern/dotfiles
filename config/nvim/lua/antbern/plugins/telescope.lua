@@ -28,6 +28,11 @@ return {
 						["<c-t>"] = open_with_trouble,
 					},
 				}
+			},
+			pickers = {
+				find_files = {
+					hidden = true,
+				}
 			}
 		})
 

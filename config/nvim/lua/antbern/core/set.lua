@@ -38,3 +38,14 @@ vim.opt.foldtext = ""
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldnestmax = 3
+
+vim.diagnostic.config({
+	-- Use the default configuration
+	virtual_text = true,
+
+	-- -- Alternatively, customize specific options
+	-- virtual_lines = {
+	-- 	-- Only show virtual line diagnostics for the current cursor line
+	-- 	current_line = true,
+	-- },
+})
