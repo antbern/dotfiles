@@ -167,6 +167,20 @@ return {
 				},
 			},
 		})
+
+		-- configure Svelte language server
+		vim.lsp.enable("svelte")
+		vim.lsp.config('svelte', {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		-- configure TypeScript language server
+		vim.lsp.enable("ts_ls")
+		vim.lsp.config('ts_ls', {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 	end
 
 }
