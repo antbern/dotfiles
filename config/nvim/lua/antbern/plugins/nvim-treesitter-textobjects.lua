@@ -1,5 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter-textobjects",
+	branch = "master", -- See comment in ./nvim-treesitter.lua
 	lazy = true,
 	config = function()
 		-- See https://www.josean.com/posts/nvim-treesitter-and-textobjects
