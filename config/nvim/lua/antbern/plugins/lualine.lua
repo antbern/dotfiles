@@ -23,7 +23,7 @@ return {
 		})
 
 		lualine.setup({
-			options = { theme = "catppuccin" },
+			options = { theme = "catppuccin-nvim" },
 			sections = {
 				lualine_c = {
 					{ symbols.get, cond = symbols.has },
