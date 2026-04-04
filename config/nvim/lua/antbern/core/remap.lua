@@ -95,7 +95,25 @@ vim.keymap.set("n", "<leader>zo", open_all_folds, { desc = "[o]pen all folds" })
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = 'Highlight when yanking text',
 	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-	callback = function ()
+	callback = function()
 		vim.highlight.on_yank();
 	end
 })
+
+-- treesitter-based incremental selection mappings (treesitter + LSP fallback).
+-- From: https://github.com/neovim/neovim/blob/b64d96ed8d21467d90ee177e26cdc8b0e43bccf6/runtime/lua/vim/_core/defaults.lua#L452-L478
+vim.keymap.set({ 'x', 'o', 'n' }, '<C-space>', function()
+	if vim.treesitter.get_parser(nil, nil, { error = false }) then
+		require 'vim.treesitter._select'.select_parent(vim.v.count1)
+	else
+		vim.lsp.buf.selection_range(vim.v.count1)
+	end
+end, { desc = 'Select parent (outer) node' })
+
+vim.keymap.set({ 'x', 'o' }, '<bs>', function()
+	if vim.treesitter.get_parser(nil, nil, { error = false }) then
+		require 'vim.treesitter._select'.select_child(vim.v.count1)
+	else
+		vim.lsp.buf.selection_range(-vim.v.count1)
+	end
+end, { desc = 'Select child (inner) node' })

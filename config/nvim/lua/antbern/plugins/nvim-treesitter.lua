@@ -1,50 +1,42 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	branch = "master", -- specify the branch to use since new version (migration needed) is on new default branch main
-	event = { "BufReadPre", "BufNewFile" },
+	branch = "main", -- specify the branch to use since new version (migration needed) is on new default branch main
+	lazy = false,
 	build = ":TSUpdate",
 	dependencies = {
-		"nvim-treesitter/nvim-treesitter-textobjects",
+		-- "nvim-treesitter/nvim-treesitter-textobjects",
 	},
 	config = function()
-		local treesitter = require("nvim-treesitter.configs")
+		local ensure_installed = { "javascript", "typescript", "rust", "c", "lua", "vim", "vimdoc", "query" }
+		require('nvim-treesitter').install(ensure_installed)
 
-		treesitter.setup({
-			-- A list of parser names, or "all" (the five listed parsers should always be installed)
-			ensure_installed = {
-				"javascript", "typescript", "rust", "c", "lua",
-				"vim", "vimdoc", "query"
-			},
+		-- Based on: https://github.com/MeanderingProgrammer/treesitter-modules.nvim?tab=readme-ov-file#do-i-need-this-plugin
+		vim.api.nvim_create_autocmd('FileType', {
+			group = vim.api.nvim_create_augroup('treesitter.setup', {}),
+			callback = function(args)
+				local buf = args.buf
+				local filetype = args.match
 
-			-- Install parsers synchronously (only applied to `ensure_installed`)
-			sync_install = false,
+				-- you need some mechanism to avoid running on buffers that do not
+				-- correspond to a language (like oil.nvim buffers), this implementation
+				-- checks if a parser exists for the current language
+				local language = vim.treesitter.language.get_lang(filetype) or filetype
+				if not vim.treesitter.language.add(language) then
+					return
+				end
 
-			-- Automatically install missing parsers when entering buffer
-			-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-			auto_install = true,
+				-- replicate `fold = { enable = true }`
+				vim.wo.foldmethod = 'expr'
+				vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
-			-- enable intentation
-			indent = { enable = true },
+				-- replicate `highlight = { enable = true }`
+				vim.treesitter.start(buf, language)
 
-			highlight = {
-				enable = true,
+				-- replicate `indent = { enable = true }`
+				vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
-				-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-				-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-				-- Using this option may slow down your editor, and you may see some duplicate highlights.
-				-- Instead of true it can also be a list of languages
-				additional_vim_regex_highlighting = false,
-			},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<C-space>",
-					node_incremental = "<C-space>",
-					scope_incremental = false,
-					node_decremental = "<bs>",
-				},
-			},
+				-- `incremental_selection = { enable = true }` covered by 0.12.0 TODO
+			end,
 		})
 	end
-
 }
