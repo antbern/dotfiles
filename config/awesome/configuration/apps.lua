@@ -16,7 +16,7 @@ return {
 		calculator = "gnome-calculator",
 		insert_character = "rofimoji",
 		screenshot_interactive = "flameshot gui",
-		process_viewer = "kitty --single-instance htop",
+		process_viewer = "kitty --single-instance btop",
 	},
 
 	command = {
